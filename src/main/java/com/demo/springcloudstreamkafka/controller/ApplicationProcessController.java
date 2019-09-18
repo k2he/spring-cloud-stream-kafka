@@ -36,44 +36,54 @@ public class ApplicationProcessController {
 
 	@NotNull
 	private final ApplicationService applicationService;
-	
+
 	@NotNull
 	private final ApplicationProcessRepository applicationProcessRespository;
 
 	@NotNull
 	private final ApplicationLogRepository applicationLogRespository;
-	
+
 	@PostMapping("/start")
 	public ResponseEntity<String> greetings(@RequestBody ProcessEvent event) {
-		log.info("======================================================================================");
-		
-		//Set initial Status for all services.
-		applicationService.initProcess(event.getApplicationNumber());
-		
+		log.info("================================== Start Processing Application ====================================");
+
 		event.setTime(LocalDateTime.now());
 		applicationProcessService.startApplicationProcessing(event);
 		return new ResponseEntity<>("Kafka Stream Message send successfully!", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "actions/{applicationNumber}", method = RequestMethod.GET)
-	public List<ApplicationProcess> getActionByApplicationNumber(
-			@PathVariable String applicationNumber) {
-	  return applicationProcessRespository.findByApplicationNumber(applicationNumber);
+	@RequestMapping(value = "/start/{numOfApplication}", method = RequestMethod.GET)
+	public ResponseEntity<String> getActionByApplicationNumber(@PathVariable Integer numOfApplication) {
+		log.info("==================================== Start Processing Bulk of Applicaions ===========================");
+
+		for (int i=1; i <= numOfApplication; i++) {
+			String applicationNumber = "F" + i;
+			ProcessEvent event = ProcessEvent.builder()
+					.applicationNumber(applicationNumber)
+					.time(LocalDateTime.now()).build();
+			applicationProcessService.startApplicationProcessing(event);
+		}
+		
+		return new ResponseEntity<>("Kafka Stream Message Bulk run finished!", HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(value = "/actions/{applicationNumber}", method = RequestMethod.GET)
+	public List<ApplicationProcess> getActionByApplicationNumber(@PathVariable String applicationNumber) {
+		return applicationProcessRespository.findByApplicationNumber(applicationNumber);
+	}
+
 	@RequestMapping(value = "actions", method = RequestMethod.GET)
 	public List<ApplicationProcess> getAllActions() {
-	  return applicationProcessRespository.findAll();
+		return applicationProcessRespository.findAll();
 	}
 
 	@RequestMapping(value = "logs/{applicationNumber}", method = RequestMethod.GET)
-	public List<ApplicationLog> getLogsByApplicationNumber(
-			@PathVariable String applicationNumber) {
-	  return applicationLogRespository.findByApplicationNumber(applicationNumber);
+	public List<ApplicationLog> getLogsByApplicationNumber(@PathVariable String applicationNumber) {
+		return applicationLogRespository.findByApplicationNumber(applicationNumber);
 	}
-	
+
 	@RequestMapping(value = "logs", method = RequestMethod.GET)
 	public List<ApplicationLog> getAllLogs() {
-	  return applicationLogRespository.findAll();
+		return applicationLogRespository.findAll();
 	}
 }

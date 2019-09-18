@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Greetings {
+public class ProcessEvent {
+  private ServiceName serviceName;
+  private String applicationNumber;
+  private String action;
+  private String actionDesc;
   private LocalDateTime time;
-  private String message;
-  private String sender;
 }

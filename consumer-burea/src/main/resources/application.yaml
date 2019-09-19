@@ -9,6 +9,7 @@ spring:
       bindings:
         bureau-in:
           destination: bureau
+          group: bureauConsumers
           contentType: application/json
         process-result-out:
           destination: processresult

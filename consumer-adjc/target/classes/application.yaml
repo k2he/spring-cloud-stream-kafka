@@ -9,6 +9,7 @@ spring:
       bindings:
         ajdc-in:
           destination: adjudication
+          group: adjcConsumers
           contentType: application/json
         process-result-out:
           destination: processresult

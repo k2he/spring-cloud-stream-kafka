@@ -12,10 +12,12 @@
 	<artifactId>lib</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>lib</name>
+	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<version.mavenPlugin>3.2</version.mavenPlugin>
 	</properties>
 
 	<dependencies>
@@ -38,10 +40,15 @@
 	</dependencies>
 
 	<build>
+		<!-- <sourceDirectory>src</sourceDirectory> -->
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.mavenPlugin}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

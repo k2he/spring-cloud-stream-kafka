@@ -24,7 +24,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.spring-cloud-stream-kafka</groupId>
+			<groupId>com.kafkastream.demo</groupId>
 	       	<artifactId>lib</artifactId>
 	       	<version>0.0.1-SNAPSHOT</version>
 	 	</dependency>

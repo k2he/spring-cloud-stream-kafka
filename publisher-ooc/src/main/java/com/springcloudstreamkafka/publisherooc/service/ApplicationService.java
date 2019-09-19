@@ -4,10 +4,10 @@ import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import com.springcloudstreamkafka.lib.dto.ProcessEvent;
-import com.springcloudstreamkafka.lib.dto.ProcessResult;
-import com.springcloudstreamkafka.lib.dto.ProcessStatus;
-import com.springcloudstreamkafka.lib.dto.ServiceName;
+import com.kafkastream.demo.lib.model.ProcessEvent;
+import com.kafkastream.demo.lib.model.ProcessResult;
+import com.kafkastream.demo.lib.model.ProcessStatus;
+import com.kafkastream.demo.lib.model.ServiceName;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationLog;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationProcess;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationStatus;
@@ -74,24 +74,27 @@ public class ApplicationService {
 		return appStatus;
 	}
 	
-	public void addTolog(String applicationNumber, String log) {
+	public void addTolog(String applicationNumber, String logString) {
+		log.info(logString);
 		ApplicationLog logEvent = ApplicationLog.builder()
 				.applicationNumber(applicationNumber)
-				.log(log).build();
+				.log(logString).build();
 		applicationLogRespository.save(logEvent);
 	}
 	
 	// Log event such as trigger start of burea
 	public void logProcessEvent(ProcessEvent event) {
 		ApplicationStatus appStatus = getAppStatus(event.getApplicationNumber());
-
-		logAppProcess(event.getApplicationNumber(), event.getAction(), event.getActionDesc(), appStatus.getBureaStatus(), appStatus.getAjdcStatus());
+		if (appStatus!=null) {
+			logAppProcess(event.getApplicationNumber(), event.getAction(), event.getActionDesc(), appStatus.getBureaStatus(), appStatus.getAjdcStatus());
+		}
 	}
-
 	// Log event result such as done burea check sucess/failed
 	public void logProcessResult(ProcessResult result) {
 		ApplicationStatus appStatus = getAppStatus(result.getApplicationNumber());
-		logAppProcess(result.getApplicationNumber(), result.getAction(), result.getActionDesc(), appStatus.getBureaStatus(), appStatus.getAjdcStatus());
+		if (appStatus!=null) {
+			logAppProcess(result.getApplicationNumber(), result.getAction(), result.getActionDesc(), appStatus.getBureaStatus(), appStatus.getAjdcStatus());
+		}
 	}
 	
 	public void logAppProcess(String applicationNumber, String applicationAction, String applicationDesc, ProcessStatus bureaStatus, ProcessStatus ajdcStatus) {

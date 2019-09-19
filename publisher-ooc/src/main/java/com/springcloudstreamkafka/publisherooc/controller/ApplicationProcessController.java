@@ -43,9 +43,7 @@ public class ApplicationProcessController {
 
   @PostMapping("/start")
   public ResponseEntity<String> startProcess(@RequestBody ProcessEvent event) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:ms");
-    String startTime = LocalDateTime.now().format(formatter);
-    log.info("============ Start Processing Single Applicaions at " + LocalDateTime.now()
+    log.info("============ Start Processing Single Applicaions at " + ApplicationService.getCurrentTimeString()
         + "================");
 
     // Set initial Status for all services.
@@ -59,10 +57,9 @@ public class ApplicationProcessController {
   @RequestMapping(value = "/start/{numOfApplication}", method = RequestMethod.GET)
   public ResponseEntity<String> getActionByApplicationNumber(
       @PathVariable Integer numOfApplication) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:ms");
-    String startTime = LocalDateTime.now().format(formatter);
+
     log.info("=================== Start Processing Bulk of Applicaions at "
-        + LocalDateTime.now() + "============");
+        + ApplicationService.getCurrentTimeString() + "============");
 
     for (int i = 1; i <= numOfApplication; i++) {
       String applicationNumber = "F" + i;
@@ -77,10 +74,9 @@ public class ApplicationProcessController {
   @RequestMapping(value = "/bulkstart", method = RequestMethod.GET)
   public ResponseEntity<String> getActionByApplicationNumber(
       @RequestParam("startNum") Integer startNum, @RequestParam("endNum") Integer endNum) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:ms");
-    String startTime = LocalDateTime.now().format(formatter);
+    
     log.info("==================================== Start Processing Bulk of Applicaions at "
-        + LocalDateTime.now() + "===========================");
+        + ApplicationService.getCurrentTimeString() + "===========================");
 
     for (int i = startNum; i <= endNum; i++) {
       String applicationNumber = "F" + i;

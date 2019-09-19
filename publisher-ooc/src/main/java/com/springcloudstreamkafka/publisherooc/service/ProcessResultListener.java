@@ -32,7 +32,7 @@ public class ProcessResultListener {
     if (appStatus.getBureaStatus().equals(ProcessStatus.COMPLETED)
         && appStatus.getAjdcStatus().equals(ProcessStatus.COMPLETED)) {
       applicationService.addTolog(result.getApplicationNumber(),
-          "(" + result.getApplicationNumber() + ") Process Done.");
+          "Application (" + result.getApplicationNumber() + ") Process Done at " + ApplicationService.getCurrentTimeString());
 
     }
   }

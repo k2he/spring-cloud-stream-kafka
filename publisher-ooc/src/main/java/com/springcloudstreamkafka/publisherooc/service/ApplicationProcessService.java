@@ -27,35 +27,32 @@ public class ApplicationProcessService {
 	private final ApplicationService applicationService;
 
 	public void startApplicationProcessing(final ProcessEvent event) {
-	  log.info("Start Processing " + event.getApplicationNumber());
-		//Set initial Status for all services.
+		log.info("Start Processing " + event.getApplicationNumber());
+		// Set initial Status for all services.
 		applicationService.initProcess(event.getApplicationNumber());
-				
-		ProcessEvent newEvent = ProcessEvent.builder().serviceName(ServiceName.BUREAU)
-				.action("Bureau-start")
+
+		ProcessEvent newEvent = ProcessEvent.builder().serviceName(ServiceName.BUREAU).action("Bureau-start")
 				.actionDesc("Message send to Message Queue with to trigger Bureau Service")
-				.applicationNumber(event.getApplicationNumber())
-				.time(event.getTime()).build();
-				
-		//log the event
+				.applicationNumber(event.getApplicationNumber()).time(event.getTime()).build();
+
+		// log the event
 		applicationService.logProcessEvent(newEvent);
-		applicationService.addTolog(event.getApplicationNumber(), event.getApplicationNumber() + " Send Message to Message Queue to Start Bureau Service.");
-		
+		applicationService.addTolog(event.getApplicationNumber(),
+				event.getApplicationNumber() + " Send Message to Message Queue to Start Bureau Service.");
+
 		MessageChannel messageChannel = applicationProcessStreams.outboundBureau();
 		messageChannel.send(MessageBuilder.withPayload(newEvent)
 				.setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build());
 
-		newEvent = ProcessEvent.builder().serviceName(ServiceName.AJUDCATION)
-				.action("Ajudication-start")
+		newEvent = ProcessEvent.builder().serviceName(ServiceName.AJUDCATION).action("Ajudication-start")
 				.actionDesc("Message send to Message Queue to trigger Ajudication Service")
-				.applicationNumber(event.getApplicationNumber())
-				.time(event.getTime()).build();
+				.applicationNumber(event.getApplicationNumber()).time(event.getTime()).build();
 
-		//log the event
+		// log the event
 		applicationService.logProcessEvent(newEvent);
-		applicationService.addTolog(event.getApplicationNumber(), event.getApplicationNumber() + " Send Message to Message Queue to Start Ajudication Service.");
-		
-		
+		applicationService.addTolog(event.getApplicationNumber(),
+				event.getApplicationNumber() + " Send Message to Message Queue to Start Ajudication Service.");
+
 		messageChannel = applicationProcessStreams.outboundAjdc();
 		messageChannel.send(MessageBuilder.withPayload(newEvent)
 				.setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build());

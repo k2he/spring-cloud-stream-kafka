@@ -1,0 +1,16 @@
+server:
+  port : 0
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        ajdc-in:
+          destination: adjudication
+          group: adjcConsumers
+          contentType: application/json
+        process-result-out:
+          destination: processresult
+          contentType: application/json

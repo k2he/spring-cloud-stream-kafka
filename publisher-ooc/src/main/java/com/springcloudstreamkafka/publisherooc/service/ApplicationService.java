@@ -1,5 +1,7 @@
 package com.springcloudstreamkafka.publisherooc.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -91,6 +93,9 @@ public class ApplicationService {
 	}
 	// Log event result such as done burea check sucess/failed
 	public void logProcessResult(ProcessResult result) {
+	  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:ms");
+	  String time = result.getTime().format(formatter);
+	  log.debug("(" + result.getApplicationNumber() + ") " + result.getServiceName() + ", "+ result.getAction() + ", " + result.getStatus() + ", " +  time);
 		ApplicationStatus appStatus = getAppStatus(result.getApplicationNumber());
 		if (appStatus!=null) {
 			logAppProcess(result.getApplicationNumber(), result.getAction(), result.getActionDesc(), appStatus.getBureaStatus(), appStatus.getAjdcStatus());

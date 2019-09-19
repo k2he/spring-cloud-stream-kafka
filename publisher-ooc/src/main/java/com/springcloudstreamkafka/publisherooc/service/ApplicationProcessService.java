@@ -27,6 +27,7 @@ public class ApplicationProcessService {
 	private final ApplicationService applicationService;
 
 	public void startApplicationProcessing(final ProcessEvent event) {
+	  log.info("Start Processing " + event.getApplicationNumber());
 		//Set initial Status for all services.
 		applicationService.initProcess(event.getApplicationNumber());
 				
@@ -38,7 +39,7 @@ public class ApplicationProcessService {
 				
 		//log the event
 		applicationService.logProcessEvent(newEvent);
-		applicationService.addTolog(event.getApplicationNumber(), "Send Message to Message Queue to Start Bureau Service.");
+		applicationService.addTolog(event.getApplicationNumber(), event.getApplicationNumber() + " Send Message to Message Queue to Start Bureau Service.");
 		
 		MessageChannel messageChannel = applicationProcessStreams.outboundBureau();
 		messageChannel.send(MessageBuilder.withPayload(newEvent)
@@ -52,7 +53,7 @@ public class ApplicationProcessService {
 
 		//log the event
 		applicationService.logProcessEvent(newEvent);
-		applicationService.addTolog(event.getApplicationNumber(), "Send Message to Message Queue to Start Ajudication Service.");
+		applicationService.addTolog(event.getApplicationNumber(), event.getApplicationNumber() + " Send Message to Message Queue to Start Ajudication Service.");
 		
 		
 		messageChannel = applicationProcessStreams.outboundAjdc();

@@ -18,23 +18,22 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ProcessResultListener {
 
-	@NotNull
-	private final ApplicationService applicationService;
+  @NotNull
+  private final ApplicationService applicationService;
 
-	@StreamListener(ApplicationProcessStreams.PROCESS_RESULT_INPUT)
-	public void handleProcessFinished(@Payload ProcessResult result) {
-		log.info("Process Result: {}", result);
-		applicationService.addTolog(result.getApplicationNumber(), result.getServiceName() + " recieved event. Starting Bureau Service - " + result.toString());
-		
-		applicationService.logProcessResult(result);
+  @StreamListener(ApplicationProcessStreams.PROCESS_RESULT_INPUT)
+  public void handleProcessFinished(@Payload ProcessResult result) {
+    applicationService.logProcessResult(result);
 
-		ApplicationStatus appStatus = applicationService.updateAppStatus(result);
-		
-		log.info("Burea Status: " + appStatus.getBureaStatus() + " Ajudication Status: " + appStatus.getAjdcStatus());
-		if (appStatus.getBureaStatus().equals(ProcessStatus.COMPLETED) && appStatus.getAjdcStatus().equals(ProcessStatus.COMPLETED)) {
-			log.info("Both Burea and Ajudication done");
-			applicationService.addTolog(result.getApplicationNumber(), "Both Burea and Ajudication done. Can start next process depends on both service completion.");
-			
-		}
-	}
+    ApplicationStatus appStatus = applicationService.updateAppStatus(result);
+
+    log.info("(" + result.getApplicationNumber() + ") Burea Status: " + appStatus.getBureaStatus() + " Ajudication Status: "
+        + appStatus.getAjdcStatus());
+    if (appStatus.getBureaStatus().equals(ProcessStatus.COMPLETED)
+        && appStatus.getAjdcStatus().equals(ProcessStatus.COMPLETED)) {
+      applicationService.addTolog(result.getApplicationNumber(),
+          "(" + result.getApplicationNumber() + ") Process Done.");
+
+    }
+  }
 }

@@ -28,7 +28,7 @@ public class BureauListener {
 	
 	@StreamListener(ApplicationProcessStreams.BUREAU_INPUT)
 	public void handleBureauStart(@Payload ProcessEvent event) {
-		log.info("Bureau event: {}", event);
+		log.info("Start Bureau event: {}", event);
 		
 		// delay 5 seconds
 		try {
@@ -46,7 +46,7 @@ public class BureauListener {
 				.applicationNumber(event.getApplicationNumber())
 				.time(LocalDateTime.now()).build();
 		
-	
+		log.info("Finished Bureau process for application=" + result.getApplicationNumber() + "\n");
 		MessageChannel messageChannel = applicationProcessStreams.outboundProcessResult();
 	    messageChannel.send(MessageBuilder.withPayload(result)
 	        .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build());

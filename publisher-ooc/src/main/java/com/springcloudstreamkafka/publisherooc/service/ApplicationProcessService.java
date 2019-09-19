@@ -27,7 +27,6 @@ public class ApplicationProcessService {
 	private final ApplicationService applicationService;
 
 	public void startApplicationProcessing(final ProcessEvent event) {
-		log.info("Started Processing Applcation {}", event);
 		//Set initial Status for all services.
 		applicationService.initProcess(event.getApplicationNumber());
 				

@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.kafkastream.demo.lib.model.ProcessEvent;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @RestController
@@ -40,7 +42,7 @@ public class ApplicationProcessController {
 	private final ApplicationLogRepository applicationLogRespository;
 	
 	@PostMapping("/start")
-	public ResponseEntity<String> greetings(@RequestBody ProcessEvent event) {
+	public ResponseEntity<String> startProcess(@RequestBody ProcessEvent event) {
 		log.info("======================================================================================");
 		
 		//Set initial Status for all services.
@@ -51,6 +53,39 @@ public class ApplicationProcessController {
 		return new ResponseEntity<>("Kafka Stream Message send successfully!", HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/start/{numOfApplication}", method = RequestMethod.GET)
+	public ResponseEntity<String> getActionByApplicationNumber(@PathVariable Integer numOfApplication) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:ms");
+		String startTime = LocalDateTime.now().format(formatter);
+		log.info("==================================== Start Processing Bulk of Applicaions at "  + LocalDateTime.now() + "===========================");
+
+		for (int i=1; i <= numOfApplication; i++) {
+			String applicationNumber = "F" + i;
+			ProcessEvent event = ProcessEvent.builder()
+					.applicationNumber(applicationNumber)
+					.time(LocalDateTime.now()).build();
+			applicationProcessService.startApplicationProcessing(event);
+		}
+		
+		return new ResponseEntity<>("Kafka Stream Message Bulk run finished!", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/bulkstart", method = RequestMethod.GET)
+	public ResponseEntity<String> getActionByApplicationNumber(@RequestParam("startNum") Integer startNum, @RequestParam("endNum") Integer endNum) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:ms");
+		String startTime = LocalDateTime.now().format(formatter);
+		log.info("==================================== Start Processing Bulk of Applicaions at "  + LocalDateTime.now() + "===========================");
+
+		for (int i=startNum; i <= endNum; i++) {
+			String applicationNumber = "F" + i;
+			ProcessEvent event = ProcessEvent.builder()
+					.applicationNumber(applicationNumber)
+					.time(LocalDateTime.now()).build();
+			applicationProcessService.startApplicationProcessing(event);
+		}
+		
+		return new ResponseEntity<>("Kafka Stream Message Bulk run finished!", HttpStatus.OK);
+	}
 	@RequestMapping(value = "actions/{applicationNumber}", method = RequestMethod.GET)
 	public List<ApplicationProcess> getActionByApplicationNumber(
 			@PathVariable String applicationNumber) {

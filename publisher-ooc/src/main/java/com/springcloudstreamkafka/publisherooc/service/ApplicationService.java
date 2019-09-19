@@ -35,7 +35,7 @@ public class ApplicationService {
 	public ApplicationStatus initProcess(String applicationNumber) {
 		ApplicationStatus appStatus = ApplicationStatus.builder().applicationNumber(applicationNumber)
 				.ajdcStatus(ProcessStatus.PENDING).bureaStatus(ProcessStatus.PENDING).build();
-		return applicationStatusRespository.saveAndFlush(appStatus);
+		return applicationStatusRespository.save(appStatus);
 	}
 
 	@Transactional(isolation=Isolation.SERIALIZABLE)

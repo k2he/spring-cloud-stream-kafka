@@ -16,6 +16,7 @@ import com.springcloudstreamkafka.consumerburea.stream.ApplicationProcessStreams
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
@@ -29,7 +30,13 @@ public class BureauListener {
 	public void handleBureauStart(@Payload ProcessEvent event) {
 		log.info("Bureau event: {}", event);
 		
-		
+		// delay 5 seconds
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+        
 		// Business Logic finished, send response to message queue.
 		ProcessResult result = ProcessResult.builder()
 				.action("bureau-compileted")

@@ -19,10 +19,13 @@ spring:
       kafka:
         binder:
           brokers: localhost:9092
+          autoAddPartitions: true
       bindings:
         bureau-out:
           destination: bureau
           contentType: application/json
+          producer:
+            partition-count: 2
         ajdc-out:
           destination: adjudication
           contentType: application/json

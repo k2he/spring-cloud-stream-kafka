@@ -17,4 +17,3 @@ spring:
         process-result-out:
           destination: processresult
           contentType: application/json
-          

@@ -19,7 +19,7 @@ public interface ApplicationProcessStreams {
   
   public static final String APPLICATION_RESULT_IN = "application-result-in";
   
-  public static final String SUCCESS_COUNT_MATERALIZED_VIEW = "success-count-mv"; // 
+  public static final String APP_RESULT_COUNT_MATERALIZED_VIEW = "application-result-count-mv"; // 
   
   @Output(BUREAU_OUTPUT)
   MessageChannel outboundBureau();

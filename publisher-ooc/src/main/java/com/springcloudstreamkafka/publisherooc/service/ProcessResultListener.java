@@ -48,7 +48,7 @@ public class ProcessResultListener {
 				|| appStatus.getBureaStatus().equals(ProcessStatus.FAILED) && !appStatus.getAjdcStatus().equals(ProcessStatus.INPROGRESS)
 				) {// CASE # 2 Failed
 			applicationService.addTolog(result.getApplicationNumber(), "Application Failed (" + result.getApplicationNumber()
-			+ ") at " + ApplicationService.getCurrentTimeString());
+			+ ") Process Done at " + ApplicationService.getCurrentTimeString());
 			applicationResultService.sendApplicationResult(result.getApplicationNumber(), ProcessStatus.FAILED);
 		}
 	}

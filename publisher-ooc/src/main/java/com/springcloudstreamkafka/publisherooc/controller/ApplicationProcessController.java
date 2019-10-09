@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kafkastream.demo.lib.model.ProcessEvent;
+import com.kafkastream.demo.lib.model.ProcessStatus;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationLog;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationProcess;
 import com.springcloudstreamkafka.publisherooc.repository.ApplicationLogRepository;
@@ -115,8 +116,13 @@ public class ApplicationProcessController {
 		return applicationLogRespository.findAll();
 	}
 
-	@RequestMapping(value = "successCounts", method = RequestMethod.GET)
+	@RequestMapping(value = "appResultCounts", method = RequestMethod.GET)
 	public Map<String, Long> getSuccessCounts() {
 		return applicationResultService.getCounts();
+	}
+	
+	@RequestMapping(value = "appResultCountsByTime", method = RequestMethod.GET)
+	public Map<ProcessStatus, Long> getSuccessCountsWindowed(@RequestParam(value = "minutes") Integer mins) {
+		return applicationResultService.getCountsWindowedForPastNumofMins(mins);
 	}
 }

@@ -63,16 +63,6 @@ public class ApplicationResultService {
 
 	@StreamListener(ApplicationProcessStreams.APPLICATION_RESULT_IN)
 	public void process(KStream<String, ApplicationResultEvent> applicationResultStream) {
-		// KTable<Windowed<String> , Long> kTable = applicationResultStream.filter((key,
-		// value) -> value.equals(ProcessStatus.COMPLETED))
-		// .map((key, value) -> new KeyValue<String,
-		// String>(value.getApplicationNumber(), "0"))
-		// .groupByKey()
-		// .windowedBy(TimeWindows.of(1000 * 60))
-		// .count(Materialized.as(ApplicationProcessStreams.SUCCESS_COUNT_MATERALIZED_VIEW));
-
-		// Below Code works
-
 		// Create a window state store contains the application process success or failed counts for 5 minute
 		KTable<Windowed<String>, Long> kTable = applicationResultStream
 				.map((key, value) -> {
@@ -83,6 +73,7 @@ public class ApplicationResultService {
 				.windowedBy(TimeWindows.of(Duration.ofMinutes(5).toMillis()))
 				.count(Materialized.as(ApplicationProcessStreams.APP_RESULT_COUNT_MATERALIZED_VIEW));
 
+		// Below Code will get all count for everything
 		// KTable<String, Long> kTable = applicationResultStream
 		// .map((key, value) -> {
 		// log.info(value.getApplicationNumber() + " " + value.getStatus());
@@ -94,73 +85,59 @@ public class ApplicationResultService {
 		kTable.toStream().foreach((key, value) -> log.info(key + " = " + value));
 	}
 
-	public Map<String, Long> getCounts() {
-		Map<String, Long> counts = new HashMap<>();
-
-		ReadOnlyKeyValueStore<String, Long> countStore = interactiveQueryService.getQueryableStore(
-				ApplicationProcessStreams.APP_RESULT_COUNT_MATERALIZED_VIEW,
-				QueryableStoreTypes.<String, Long>keyValueStore());
-
-		KeyValueIterator<String, Long> all = countStore.all();
-
-		if (all != null) {
-			while (all.hasNext()) {
-				KeyValue<String, Long> value = all.next();
-				counts.put(value.key, value.value);
-			}
-			return counts;
-		}
-		return null;
-	}
-
-	public Map<ProcessStatus, Long> getCountsWindowedForPastMins(int mins) {
+	// Get total number of success and failed application counts
+	public Map<ProcessStatus, Long> getCountsByMins(int mins) {
 		Map<ProcessStatus, Long> counts = new HashMap<>();
-
-//		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-//		c.add(Calendar.HOUR, -24);
-//		long result = c.getTimeInMillis();
 		
-		long timeFrom = System.currentTimeMillis() - 1000 * 60 * mins; // beginning of time = 5 mins ago
+		long timeFrom = System.currentTimeMillis() - 1000 * 60 * mins; // beginning of time = # of mins ago
 		long timeTo = System.currentTimeMillis(); // now (in processing-time)
 
 		ReadOnlyWindowStore<String, Long> countStore = interactiveQueryService.getQueryableStore(
 				ApplicationProcessStreams.APP_RESULT_COUNT_MATERALIZED_VIEW,
 				QueryableStoreTypes.<String, Long>windowStore());
 
-		WindowStoreIterator<Long> iterator = countStore.fetch(ProcessStatus.COMPLETED.toString(), timeFrom, timeTo);
-//		KeyValueIterator<Windowed<String>, Long> iterator = countStore.all();
+		KeyValueIterator<Windowed<String>, Long> iterator = countStore.fetchAll(timeFrom, timeTo);
 		
-		Long successCount = null;
-		while (iterator.hasNext()) {
-			KeyValue<Long, Long> next = iterator.next();
-//			KeyValue<Windowed<String>, Long> next = iterator.next();
-//			Windowed<String> windowedKey = next.key; 
-			Long windowedKey = next.key;
-			successCount = next.value;
-			log.info("!!! Key = " + windowedKey + "  Value = " + successCount);
+		Long successCount = new Long(0);
+		Long failedCount = new Long(0);
+		
+		// Sum of each window is total number of success/ failure over past period of time 
+		// (Remember we may need set WindowTime to be small in order to make sure there is no duplicate.
+		while (iterator.hasNext()) {		
+			KeyValue<Windowed<String>, Long> next = iterator.next();
+			Windowed<String> windowedKey = next.key; 
+			String key = windowedKey.key();
+			if (ProcessStatus.COMPLETED.toString().equals(key)) {
+				successCount += next.value;
+			} else {
+				failedCount += next.value;
+			}
+			log.info("!!! Key = " + windowedKey.key() + "  Value = " + next.value);
 		}
 		
-		if (successCount != null) {
-			counts.put(ProcessStatus.COMPLETED, successCount);
-		}
-		
-		// Get count for Failed Application
-		WindowStoreIterator<Long> iteratorFailed = countStore.fetch(ProcessStatus.FAILED.toString(), timeFrom, timeTo);
-		
-		Long failedCount = null;
-		while (iteratorFailed.hasNext()) {
-			KeyValue<Long, Long> next = iteratorFailed.next();
-//			KeyValue<Windowed<String>, Long> next = iterator.next();
-//			Windowed<String> windowedKey = next.key; 
-			Long windowedKey = next.key;
-			failedCount = next.value;
-			log.info("!!! Key = " + windowedKey + "  Value = " + failedCount);
-		}
-		
-		if (failedCount != null) {
-			counts.put(ProcessStatus.FAILED, failedCount);
-		}
+		counts.put(ProcessStatus.COMPLETED, successCount);
+		counts.put(ProcessStatus.FAILED, failedCount);
 		
 		return counts;
 	}
+	
+	//Below Code will get all count for everything
+//	public Map<String, Long> getCounts() {
+//		Map<String, Long> counts = new HashMap<>();
+//
+//		ReadOnlyKeyValueStore<String, Long> countStore = interactiveQueryService.getQueryableStore(
+//				ApplicationProcessStreams.APP_RESULT_COUNT_MATERALIZED_VIEW,
+//				QueryableStoreTypes.<String, Long>keyValueStore());
+//
+//		KeyValueIterator<String, Long> all = countStore.all();
+//
+//		if (all != null) {
+//			while (all.hasNext()) {
+//				KeyValue<String, Long> value = all.next();
+//				counts.put(value.key, value.value);
+//			}
+//			return counts;
+//		}
+//		return null;
+//	}
 }

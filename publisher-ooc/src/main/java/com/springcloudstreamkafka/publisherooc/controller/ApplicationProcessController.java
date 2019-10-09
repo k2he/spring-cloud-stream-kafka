@@ -123,6 +123,6 @@ public class ApplicationProcessController {
 	
 	@RequestMapping(value = "appResultCountsByTime", method = RequestMethod.GET)
 	public Map<ProcessStatus, Long> getSuccessCountsWindowed(@RequestParam(value = "minutes") Integer mins) {
-		return applicationResultService.getCountsWindowedForPastNumofMins(mins);
+		return applicationResultService.getCountsByMins(mins);
 	}
 }

@@ -10,14 +10,11 @@ import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
-import org.apache.kafka.streams.kstream.TimeWindows;
-import org.apache.kafka.streams.kstream.Windowed;
 import org.apache.kafka.streams.state.KeyValueIterator;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
-import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.binder.kafka.streams.QueryableStoreRegistry;
+import org.springframework.cloud.stream.binder.kafka.streams.InteractiveQueryService;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
@@ -46,7 +43,7 @@ public class ApplicationResultService {
 	private final ApplicationService applicationService;
 
 	@NotNull
-	private final QueryableStoreRegistry registry;
+	private final InteractiveQueryService interactiveQueryService;
 	
 	public void sendApplicationResult(String applicationNumber, ProcessStatus status) {
 		ApplicationResultEvent appResultEvent = ApplicationResultEvent.builder().applicationNumber(applicationNumber)
@@ -85,9 +82,11 @@ public class ApplicationResultService {
 	public Map<String, Long> getCounts() {
 		Map<String, Long> counts = new HashMap<>();
 		
-		ReadOnlyKeyValueStore<String, Long> queryableStoreType = registry.getQueryableStoreType(ApplicationProcessStreams.SUCCESS_COUNT_MATERALIZED_VIEW, QueryableStoreTypes.keyValueStore());
+		ReadOnlyKeyValueStore<String, Long> countStore =
+				interactiveQueryService.getQueryableStore(ApplicationProcessStreams.SUCCESS_COUNT_MATERALIZED_VIEW, QueryableStoreTypes.<String, Long>keyValueStore());
+
 		
-		KeyValueIterator<String, Long> all = queryableStoreType.all();
+		KeyValueIterator<String, Long> all = countStore.all();
 		
 		if (all != null) {
 			while(all.hasNext()) {

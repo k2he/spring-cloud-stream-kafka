@@ -1,3 +1,4 @@
+spring.application.name: kafka-streams-sample
 logging:
   level:
     root: INFO
@@ -16,10 +17,28 @@ spring:
   
   cloud:
     stream:
+      default:
+        consumer:
+          headerMode: raw
       kafka:
         binder:
           brokers: localhost:9092
           autoAddPartitions: true
+          configuration:
+            default:
+              key:
+                serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              value:
+                serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            commit.interval.ms: 1000
+        streams:
+          binder.configuration:
+            default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+          bindings:
+            application-result-in:
+              consumer:
+                application-id: application-result-count
       bindings:
         bureau-out:
           destination: bureau
@@ -33,3 +52,11 @@ spring:
           group: processresultConsumers
           destination: processresult
           contentType: application/json
+        application-result-out:
+          destination: applicationresult
+        application-result-in:
+          group: applicationresultConsumers
+          destination: applicationresult
+          consumer:
+            use-native-encoding: true
+          

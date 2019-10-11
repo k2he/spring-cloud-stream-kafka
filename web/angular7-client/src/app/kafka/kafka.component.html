@@ -5,8 +5,7 @@
 		  <mat-card>
 			<div class="row title">Start Process Applications F1 to F20</div>
 			<div class="row">we will call OOC (origination and orchestration) servive to start processing application F1, F2 ... F20.</div>
-			<div class="startProcessMessage" *ngIf="testProcessStartedMessage">{{ testProcessStartedMessage }}</div>
-			<mat-card-actions>
+			<mat-card-actions class="margin-top-20">
 			  	<button mat-button class="button" (click)="testProcess20Apps()">Start</button>
 			  	<button mat-button class="button" (click)="getApplicationsProcessDetailData()">Get Processing Details</button>
 			  	<button mat-button class="button" (click)="getApplicationsProcessSummary()">Get Processing Summary</button>
@@ -26,12 +25,20 @@
 	
 					<ng-container matColumnDef="bureauStatus">
 						<mat-header-cell *matHeaderCellDef mat-sort-header>Bureau Status</mat-header-cell>
-						<mat-cell *matCellDef="let application"> {{application.bureauStatus}} </mat-cell>
+						<mat-cell *matCellDef="let application">
+							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.bureauStatus == 'INPROGRESS')">directions_run</i>
+							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.bureauStatus == 'COMPLETED')">check_circle</i>
+							<i class="material-icons fail"  matTooltip="FAILED" *ngIf="(application.bureauStatus == 'FAILED')">cancel</i>
+						</mat-cell>
 					</ng-container>
 	
 					<ng-container matColumnDef="ajdcStatus">
 						<mat-header-cell *matHeaderCellDef mat-sort-header>Ajudication Status</mat-header-cell>
-						<mat-cell *matCellDef="let application"> {{application.ajdcStatus}} </mat-cell>
+						<mat-cell *matCellDef="let application">
+							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.ajdcStatus == 'INPROGRESS')">directions_run</i>
+							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.ajdcStatus == 'COMPLETED')">check_circle</i>
+							<i class="material-icons fail" matTooltip="FAILED" *ngIf="(application.ajdcStatus == 'FAILED')">cancel</i>
+						</mat-cell>
 					</ng-container>
 	
 					<ng-container matColumnDef="createdDate">

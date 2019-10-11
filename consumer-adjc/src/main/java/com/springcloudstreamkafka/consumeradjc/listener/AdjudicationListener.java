@@ -1,6 +1,8 @@
 package com.springcloudstreamkafka.consumeradjc.listener;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
@@ -21,25 +23,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class AdjudicationListener {
-  
+
 	@NonNull
 	private final ApplicationProcessStreams applicationProcessStreams;
-	
+
 	@StreamListener(ApplicationProcessStreams.AJDC_INPUT)
 	public void handleAjdcStart(@Payload ProcessEvent event) {
 		log.info("Ajudication event: {}", event);
-		
-		ProcessResult result = ProcessResult.builder()
-				.action("ajudication-compileted")
+
+		// delay 1 seconds
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			System.err.format("IOException: %s%n", e);
+		}
+
+		ProcessResult result = ProcessResult.builder().action("ajudication-compileted")
 				.actionDesc("Ajudication Service Completed, sending message back to Queue with Status Completed.")
-				.serviceName(ServiceName.AJUDCATION)
-				.status(ProcessStatus.COMPLETED)
-				.applicationNumber(event.getApplicationNumber())
-				.time(LocalDateTime.now()).build();
-		
+				.serviceName(ServiceName.AJUDCATION).status(ProcessStatus.COMPLETED)
+				.applicationNumber(event.getApplicationNumber()).time(LocalDateTime.now()).build();
+
 		MessageChannel messageChannel = applicationProcessStreams.outboundProcessResult();
-	    messageChannel.send(MessageBuilder.withPayload(result)
-	        .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build());
-	    
+		messageChannel.send(MessageBuilder.withPayload(result)
+				.setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build());
+
 	}
 }

@@ -47,7 +47,7 @@ export class KafkaComponent implements OnInit, AfterViewChecked {
     const response = await this.kafkaService.startProcessApps(20).toPromise();
     this.testProcessStartedMessage = response.message;
 
-    timer(0, 2000)
+    timer(0, 1000)
     .pipe(
       // This kills the request if the user closes the component 
       takeUntil(this.killTrigger),

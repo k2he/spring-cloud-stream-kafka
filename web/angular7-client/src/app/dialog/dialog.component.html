@@ -1,0 +1,12 @@
+<div>
+	<div class="dialog-title" mat-dialog-title *ngIf="data.title">
+		{{data.title}}
+	</div>
+	<div class="dialog-content" mat-dialog-content *ngIf="data.content">
+		<p>{{data.content}}</p>
+	</div>
+	<div class="dialog-button" mat-dialog-actions>
+		<button mat-button class="yes" (click)="onConfirm()">{{ 'button.yes' | translate }}</button>
+		<button mat-button class="no" (click)="onCancell()">{{ 'button.no' | translate }}</button>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+.footer {
+    background-color: #353639;
+    color: white;
+    text-align: center;
+    padding: 25px 35px;
+    font-family: Roboto,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+    font-size: 15px;
+    height: 35px;
+    line-height: 20px;
+
+    .copy-right {
+        float: left;
+    }
+
+    .footer-content {
+        float: right;
+        text-align: right;
+    }
+}

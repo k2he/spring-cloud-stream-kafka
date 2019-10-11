@@ -1,0 +1,7 @@
+<nav>
+	<ul>
+		<li *ngFor="let item of naviItemList">
+			<a routerLink="{{item.url}}" [ngClass]="item.active ? '' : 'disabled'">{{item.name}}</a>
+		</li>
+	</ul>
+</nav>

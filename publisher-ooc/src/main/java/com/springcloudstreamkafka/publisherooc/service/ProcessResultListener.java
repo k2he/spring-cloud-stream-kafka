@@ -35,17 +35,17 @@ public class ProcessResultListener {
 
 		ApplicationStatus appStatus = applicationService.updateAppStatus(result);
 
-		log.info("(" + result.getApplicationNumber() + ") Burea Status: " + appStatus.getBureaStatus()
+		log.info("(" + result.getApplicationNumber() + ") Burea Status: " + appStatus.getBureauStatus()
 				+ " Ajudication Status: " + appStatus.getAjdcStatus());
 		// CASE #1: Success
-		if (appStatus.getBureaStatus().equals(ProcessStatus.COMPLETED)
+		if (appStatus.getBureauStatus().equals(ProcessStatus.COMPLETED)
 				&& appStatus.getAjdcStatus().equals(ProcessStatus.COMPLETED)) {
 			applicationService.addTolog(result.getApplicationNumber(), "Application (" + result.getApplicationNumber()
 					+ ") Process Done at " + ApplicationService.getCurrentTimeString());
 			// Completeted Successfully
 			applicationResultService.sendApplicationResult(result.getApplicationNumber(), ProcessStatus.COMPLETED);
-		} else if (!appStatus.getBureaStatus().equals(ProcessStatus.INPROGRESS) && appStatus.getAjdcStatus().equals(ProcessStatus.FAILED)
-				|| appStatus.getBureaStatus().equals(ProcessStatus.FAILED) && !appStatus.getAjdcStatus().equals(ProcessStatus.INPROGRESS)
+		} else if (!appStatus.getBureauStatus().equals(ProcessStatus.INPROGRESS) && appStatus.getAjdcStatus().equals(ProcessStatus.FAILED)
+				|| appStatus.getBureauStatus().equals(ProcessStatus.FAILED) && !appStatus.getAjdcStatus().equals(ProcessStatus.INPROGRESS)
 				) {// CASE # 2 Failed
 			applicationService.addTolog(result.getApplicationNumber(), "Application Failed (" + result.getApplicationNumber()
 			+ ") Process Done at " + ApplicationService.getCurrentTimeString());

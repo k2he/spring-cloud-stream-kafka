@@ -36,7 +36,7 @@ public class ApplicationProcess {
 	private String applicationDesc;
 	
 	@Enumerated(EnumType.STRING)
-	private ProcessStatus bureaStatus;
+	private ProcessStatus bureauStatus;
 	
 	@Enumerated(EnumType.STRING)
 	private ProcessStatus ajdcStatus;

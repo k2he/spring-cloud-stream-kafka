@@ -1,0 +1,21 @@
+.loading-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+    width: 100%;
+    vertical-align: middle;
+	mat-spinner {
+		// height: 100%;
+	  	// width: 100%;
+		top: calc(50% - 50px);
+		left: calc(50% - 50px);
+		transform: translateX(-50%) translateY(-50%);
+		svg circle {
+			stroke-width: 5% !important;
+		}
+	}
+	z-index: 1000;
+}

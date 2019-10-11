@@ -1,0 +1,298 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html, body {
+	height: 100%;
+	margin: 0px;
+	display: block;
+	background: #e3e4e9;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+.tools {
+	.material-icons {
+		color: #8ad021ed;
+	}
+}
+
+.error {
+	color:#f70d0d;
+}
+
+.description-with-link {
+	a {
+		margin-right: 10px;
+	}
+}
+
+.link-img {
+	height: 24px;
+	width: 24px;
+	vertical-align: bottom;
+	margin-right: 3px;
+}
+
+.list-block {
+    margin: 20px 0px;
+
+    .description-title { 
+        font-size: 16px;
+        font-weight: bold;
+        color: #0e0e10de;
+    }
+    
+    .description-item {
+		font-family: Comic Sans MS;
+		display: inline-block;
+		// text-overflow: ellipsis;
+		  // overflow: hidden; 
+    }
+    
+    .description-notes {
+        margin: 10px 0px;
+	}
+}
+
+.content-with-no-background {
+	min-height: 95vh;
+
+	.page-main-container {
+		background-color: white;
+		margin:15px 50px 10px 50px;
+		padding: 20px 30px;
+		border-radius: 5px;
+		position: relative;
+		min-height: calc(90vh - 10px);
+	}
+
+	.page-main-container-with-sideNavi {
+		background-color: white;
+		margin:15px 50px 0px 50px;
+		border-radius: 5px;
+		position: relative;
+		min-height: calc(95vh - 20px);
+
+		.main-container {
+			width: 100%;
+			margin-bottom: 20px;
+
+			.content {
+				padding: 30px 35px 30px 35px;
+				overflow: hidden;
+				min-height: 500px;
+				margin-left: 150px;
+			}
+		}
+	}
+
+	.content-title {
+		font-size: 23px;
+		margin-bottom:50px;
+		color: #635f5f;
+		font-family: Roboto,"Helvetica Neue",sans-serif;
+	}
+
+	.content-main { 
+		font-family: inherit;
+		color: #514747;
+
+		.form-container {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.3;
+}
+
+.float-content-shadow {
+	-webkit-box-shadow: 0px 0px 6px 2px #969696d9 !important;  /* Safari*/
+	-moz-box-shadow:    0px 0px 6px 2px #969696d9 !important;  /* Firefox */
+	box-shadow:         0px 0px 6px 2px #969696d9 !important;  /* Other */
+}
+
+.popup-title {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:16px;
+	color: #454846;
+}
+
+/*
+CSS for both login and home page
+*/
+.home-background {
+	background: url(assets/images/home_background.jpg) no-repeat center center; 
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+	background-size: cover;
+
+	.content-with-home-background {
+        height: calc(100vh - 160px);
+        position: relative;
+	}
+}
+
+/* Material customized CSS */
+.mat-dialog-container {
+    border-radius: 5px !important;
+	max-width: 400px;
+
+	.title {
+		font-size:15px;
+	}
+
+	.dialog-content {
+		font-size: 13px;
+		color: #2558d4;
+	}
+
+	.mat-button {
+		border-radius: 5px;
+	}
+
+	.dialog-button {
+		.yes {
+			float: left;
+		}
+
+		.no {
+			/* float: right; */
+			margin-left: 175px !important;
+		}
+	}
+}
+
+.mat-card {
+    border-radius: 5px !important;
+}
+
+.mat-card-actions {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.mat-card>.mat-card-actions:last-child {
+	margin-bottom: -5px !important;
+}
+
+/*
+Customized CSS for header page
+*/
+.mat-card-header .mat-card-title {
+	font-size: 16px !important;
+}
+
+/* Table CSS start*/
+.mat-table {
+	.mat-button{
+		color: #545454;
+		background-color: #b3b3b34f;
+		border-radius: 8px;
+	}
+}
+
+.mat-form-field {
+	margin-top:10px;
+}
+
+.mat-form-field-infix {
+	width: 250px !important;
+}
+
+/* Single style CSS start */
+.width-400px {
+	width: 400px;
+}
+
+.width-500px {
+	width: 500px;
+}
+
+.width-600px { 
+	width: 600px;
+}
+
+.margin-left-5px {
+	margin-left: 5px;
+}
+
+.margin-top-50px {
+	margin-top: 50px;
+}
+
+.margin-top-15px {
+	margin-top: 15px;
+}
+
+.margin-top-30px {
+	margin-top: 30px;
+}
+
+.display-inline { 
+	display: inline-block;
+}
+
+.top-100px {
+	top: 100px;
+}
+
+.center {
+    margin: auto;
+}
+
+.margin-0 {
+	margin: 0px !important;
+}
+
+.cdk-overlay-container {
+	$snackbar-color: #f5f5f5;
+	bottom: 70px !important; // Position it to top of footer so it won't overlap with footer.
+	top: auto; 
+
+	.mat-simple-snackbar {
+		span {
+			white-space: pre-wrap;      /* CSS3 */   
+			white-space: -moz-pre-wrap; /* Firefox */    
+			white-space: -pre-wrap;     /* Opera <7 */   
+			white-space: -o-pre-wrap;   /* Opera 7 */    
+		}
+	}
+
+	.snackbar-success {
+		background:#AABA0A;
+		color: $snackbar-color;
+
+		.mat-simple-snackbar-action {
+			color: $snackbar-color;
+		}
+	}
+
+	.snackbar-error {
+		background:#c72121eb;
+		color: $snackbar-color;
+		
+		.mat-simple-snackbar-action {
+			color: $snackbar-color;
+		}
+	}
+}
+
+.app {
+	::-webkit-scrollbar {
+		-webkit-appearance: none;
+		width: 7px;
+  	}
+  
+  	::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+		border-radius: 5px;
+    	background-color: #6b6767cf;
+    	opacity: 0.5;
+    	transition: opacity .15s ease-in-out;
+	}
+}

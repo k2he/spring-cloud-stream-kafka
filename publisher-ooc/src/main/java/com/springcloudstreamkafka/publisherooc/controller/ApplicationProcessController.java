@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kafkastream.demo.lib.model.ProcessEvent;
 import com.kafkastream.demo.lib.model.ProcessStatus;
+import com.springcloudstreamkafka.publisherooc.dto.ApplicationStatusDetails;
+import com.springcloudstreamkafka.publisherooc.dto.StartProcessResponse;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationLog;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationProcess;
 import com.springcloudstreamkafka.publisherooc.repository.ApplicationLogRepository;
@@ -33,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/kafka")
 public class ApplicationProcessController {
 
 	@NonNull
@@ -51,7 +54,7 @@ public class ApplicationProcessController {
 	private final ApplicationLogRepository applicationLogRespository;
 
 	@PostMapping("/start")
-	public ResponseEntity<String> startProcess(@RequestBody ProcessEvent event) {
+	public ResponseEntity<StartProcessResponse> startProcess(@RequestBody ProcessEvent event) {
 		log.info("============ Start Processing Single Applicaions at " + ApplicationService.getCurrentTimeString()
 				+ "================");
 
@@ -60,11 +63,14 @@ public class ApplicationProcessController {
 
 		event.setTime(LocalDateTime.now());
 		applicationProcessService.startApplicationProcessing(event);
-		return new ResponseEntity<>("Kafka Stream Message send successfully!", HttpStatus.OK);
+		
+		StartProcessResponse response = StartProcessResponse.builder().message("Kafka Stream Message send successfully!").build();
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/start/{numOfApplication}", method = RequestMethod.GET)
-	public ResponseEntity<String> getActionByApplicationNumber(@PathVariable Integer numOfApplication) {
+	public ResponseEntity<StartProcessResponse> getActionByApplicationNumber(@PathVariable Integer numOfApplication) {
 
 		log.info("=================== Start Processing Bulk of Applicaions at "
 				+ ApplicationService.getCurrentTimeString() + "============");
@@ -76,11 +82,13 @@ public class ApplicationProcessController {
 			applicationProcessService.startApplicationProcessing(event);
 		}
 
-		return new ResponseEntity<>("Kafka Stream Message Bulk run finished!", HttpStatus.OK);
+		StartProcessResponse response = StartProcessResponse.builder().message("Kafka Stream Message Bulk run started!").build();
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/bulkstart", method = RequestMethod.GET)
-	public ResponseEntity<String> getActionByApplicationNumber(@RequestParam("startNum") Integer startNum,
+	@RequestMapping(value = "/startRange", method = RequestMethod.GET)
+	public ResponseEntity<StartProcessResponse> getActionByApplicationNumber(@RequestParam("startNum") Integer startNum,
 			@RequestParam("endNum") Integer endNum) {
 
 		log.info("==================================== Start Processing Bulk of Applicaions at "
@@ -92,10 +100,16 @@ public class ApplicationProcessController {
 					.build();
 			applicationProcessService.startApplicationProcessing(event);
 		}
-
-		return new ResponseEntity<>("Kafka Stream Message Bulk run finished!", HttpStatus.OK);
+		StartProcessResponse response = StartProcessResponse.builder().message("Kafka Stream Message Bulk run started!").build();
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "appStatusDetails", method = RequestMethod.GET)
+	public ApplicationStatusDetails getApplicationStatusDetails() {
+		return applicationService.getAllAppStatus();
+	}
+	
 	@RequestMapping(value = "actions/{applicationNumber}", method = RequestMethod.GET)
 	public List<ApplicationProcess> getActionByApplicationNumber(@PathVariable String applicationNumber) {
 		return applicationProcessRespository.findByApplicationNumber(applicationNumber);
@@ -116,10 +130,10 @@ public class ApplicationProcessController {
 		return applicationLogRespository.findAll();
 	}
 
-	@RequestMapping(value = "appResultCounts", method = RequestMethod.GET)
-	public Map<String, Long> getSuccessCounts() {
-		return applicationResultService.getCounts();
-	}
+//	@RequestMapping(value = "appResultCounts", method = RequestMethod.GET)
+//	public Map<String, Long> getSuccessCounts() {
+//		return applicationResultService.getCounts();
+//	}
 	
 	@RequestMapping(value = "appResultCountsByTime", method = RequestMethod.GET)
 	public Map<ProcessStatus, Long> getSuccessCountsWindowed(@RequestParam(value = "minutes") Integer mins) {

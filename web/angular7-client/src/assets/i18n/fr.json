@@ -1,0 +1,184 @@
+{
+    "button": {
+        "edit": "Modifier",
+        "delete": "Effacer",
+        "login": "S'identifier",
+        "submit": "Soumettre",
+        "yes": "Oui",
+        "no": "Non"
+    },
+    "field_validation": {
+        "error": {
+            "required": "Ce champ est requis",
+            "min-length": "Vous devez entrer plus de {{length}} caractères",
+            "email": "S'il vous plaît, mettez une adresse email valide",
+            "phone": "s'il vous plaît entrer un numéro de téléphone valide"
+        }
+    },
+    "page-under-construction-message": "Cette fonctionnalité est encore en construction ~!",
+    
+    "header-page": {
+        "title": "Ma demande de démo",
+        "navlinks": {
+            "home": "Accueil",
+            "about": "Conception",
+            "projects": "Projects",
+            "kafka": "kafka",
+            "contacts": "Nous contacter",
+            "admin": "Admin"
+        },
+        "greeting": "Bienvenue: {{name}}",
+        "login": "S'identifier",
+        "logout": "Connectez - Out",
+        "changeLanguage": "English"
+    },
+    "footer-page": {
+        "copyright": "Droits d'auteur © 2018 Kai He",
+        "contact": "Téléphone",
+        "email": "Email"
+    },
+    "home-page": {
+        "title": "Démo angulaire et microservice",
+        "subtitle": "Cette application est construite avec Angular sur le système frontal et Spring Cloud Microservice sur le système principal.",
+        "design-description": "Pour plus de détails sur la pile Arcetehcture et la technologie, consultez les pages suivantes:",
+        "design-link-description": "Page de conception",
+        "notes-part1": "Notes: S'il vous plaît utiliser Chrome",
+        "notes-part2": "depuis, les fonctionnalités ne sont actuellement testées qu'en chrome. Désolé pour l'inconvinience!"
+    },
+    "login-page": {
+        "title": "Veuillez vous connecter",
+        "or": "OU",
+        "google": "Connectez-vous avec Google",
+        "facebook": "Connectez-vous avec Facebook",
+        "facebook-tip": "Je n'ai pas encore configuré Facebook!",
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe"
+    },
+    "projects-page": {
+        "delete-success-message": "Projet supprimé avec succès! 😎",
+        "update-success-message": "Projet mis à jour avec succès! 😎",
+        "create-success-message": "Projet créé avec succès! 😎",
+        "naviItems": {
+            "all": "Tous les projets",
+            "create": "Créer un nouveau projet",
+            "in-progress": "Projets en cours",
+            "schedule": "Calendrier des projets",
+            "completed": "Projets achevés"
+        },
+        "all-projects-page": {
+            "title": "Tous les projets",
+            "search": "Chercher:",
+            "table": {
+                "header-project": "Nom du projet",
+                "header-desc": "La description",
+                "header-due": "Date d'échéance",
+                "header-skill": "Compétences Requises",
+                "header-cost": "Coût estimé",
+                "header-status": "Statut",
+                "header-action": "Actes"
+            },
+            "delete-title": "Êtes-vous sûr de vouloir supprimer le projet sélectionné?",
+            "delete-content": "S'il vous plaît cliquez sur Oui pour continuer."
+        },
+        "in-progress-page": {
+            "title": "Projets en cours"
+        },
+        "new-project-page": {
+            "create-project-title": "Créer un nouveau projet",
+            "edit-project-title": "Modifier les détails du projet",
+            "form": {
+                "field-name": "Nom du projet",
+                "field-skill": "Compétences requises",
+                "field-cost": "Coût estimé",
+                "field-cost-excced-max": "Wow, c'est trop cher, on ne va pas le faire !!!",
+                "field-due": "Choisissez une date d'échéance du projet",
+                "field-desc": "Description du projet"
+            }
+        }
+    },
+    "contact-us-page": {
+        "title": "Contactez nous",
+        "sub-title": "Remplissez le formulaire et nous vous rappellerons",
+        "form": {
+            "field-name": "Prénom",
+            "field-email": "Email",
+            "field-phone": "Numéro de téléphone",
+            "field-subject": "Assujettir",
+            "field-message": "Message"
+        },
+        "create-success-message": "Nous avons reçu vos retours. Je vous remercie! 😎"
+    },
+    "admin-page": {
+        "naviItems": {
+            "manage": "Gérer les utilisateurs",
+            "register": "Enregistrer un utilisateur"
+        },
+        "manage-page": {
+            "title": "Gérer les utilisateurs",
+            "explaination": "Si vous pouvez voir cette page, vous êtes connecté en tant qu'administrateur.",
+            "detail-title": "Vous pouvez vous connecter en utilisant l'utilisateur normal ci-dessous, vous ne devriez pas voir cette page.",
+            "username-detail": "Nom d'utilisateur: test1",
+            "password-detail": "Mot de passe: 12345"
+        },
+        "register-page": {
+            "title": "Enregistrer un utilisateur"
+        }
+    },
+    "about-page": {
+        "naviItems": {
+            "backend": "Conception du back-end",
+            "frontend": "Conception frontale"
+        },
+        "source-code": "Code source: ",
+        "backend-page": {
+            "title": "Architecture back-end",
+            "source-code-github": "Mon GitHub (Backend)",
+            "source-code-dockerhub": "Docker Hub",
+            "source-code-swagger": "APIs Swagger Link",
+            "design-description": "API REST construites à l'aide de Microservice Archtecture. Desgin diagramme comme ci-dessous:",
+            "tech-list-title": "Les technologies:",
+            "tech-desc-item1": "Spring Boot 2, Spring Security 5, Spring Cloud, Spring AOP",
+            "tech-desc-item2": "JPA (Hibernate), mySQL",
+            "tech-desc-item3": "Database Auth, Oauth2 (Social Auth), JWT, Private & Pubilc keys",
+            "tech-desc-item4": "Swagger2, Log4j, Lambok, Sleuth, Hystrix, Spring Retry, Zipkin",
+            "tech-desc-item5": "Docker, Docker Compose, Kubernetes, AWS (EC2, RDS)",
+            "security-title": "Conception de sécurité et flux de travail",
+            "security-desc": "Utilisation du jeton JWT (heure d'expiration et rôle d'utilisateur inclus) pour valider l'accès utilisateur. Première fois que l'utilisateur tente de se connecter, redirigez-le vers le serveur d'authentification.",
+            "auth-title": "Conception du serveur d'authentification",
+            "auth-desc1": "1) Si l'utilisateur choisit de se connecter à l'aide d'un nom d'utilisateur et d'un mot de passe, validez à nouveau les informations utilisateur stockées dans la base de données avec le rôle utilisateur.",
+            "auth-desc2": "2) Si l'utilisateur choisit de se connecter à l'aide de la connexion sociale, redirigez-vous vers la page de connexion sociale, s'il autorise l'accès (e-mail et profil). Le système créera automatiquement un nouveau compte en utilisant Email.",
+            "auth-text": "En cas de connexion réussie, le jeton JWT contenant les rôles d’utilisateur sera généré et signé avec la clé privée du magasin de clés, puis renvoyé en tant que réponse de connexion. De plus, il existe un point de terminaison REST pour accéder à la clé publique.",
+            "key-title": "Clé publique et privée",
+            "key-desc": "Les clés publique et privée sont stockées dans le magasin de clés pour empêcher l’extérieur d’obtenir une clé privée.",
+            "service-title": "Chaque service individuel",
+            "service-desc1": "L'appel à chaque service individuel doit également être validé à l'aide d'un jeton JWT afin d'améliorer la sécurité au niveau de service individuel.",
+            "service-desc2": "Chaque service récupérera la clé publique du serveur Auth puis validera le jeton JWT entrant. Si la validation échoue, la demande est rejetée. En cas de succès, les ressources seront retournées.",
+            "deploy-title" : "Déploiement",
+            "deploy-desc1": "Chaque service contient un fichier Docker, et les images du menu fixe se trouvent sur le hub du menu fixe:",
+            "deploy-desc2": "Il peut être déployé sur le cloud en utilisant Kubernetes ou Cloud Provider dispose de son propre outil pour faciliter le déploiement. Par exemple: AWS peut utiliser ECS pour déployer le menu fixe dans des instances EC2 et effectuer une mise à l'échelle automatique."
+        },
+        "frontend-page": {
+            "title": "Conception frontale",
+            "source-code-github": "Mon GitHub (Frontend)",
+            "source-code-dockerhub": "Docker Hub",
+            "tech-desc-title": "Technologies frontales:",
+            "tech-desc-item1": "Angular 5 (Migrated to 7)",
+            "tech-desc-item2": "Angular Material",
+            "tech-desc-item3": "SCSS, RxJS 6.3, NGX Translate(Muti-language)",
+            "feature-title": "Caractéristiques frontales:",
+            "feature-desc": "Ce site a été conçu uniquement pour apprendre Angular. Nous avons donc essayé d’utiliser toutes les fonctionnalités angulaires et de respecter les meilleures normes de codage.",
+            "structure-title": "Structure du code",
+            "structure-desc": "Les composants d'en-tête, de pied de page, d'accueil, de connexion et de page non trouvée sont dans le module principal, et les directives, les tubes et les composants partagés sont sous le module partagé.",
+            "language-title": "Langue multiple - anglais / français pour l'instant (i18n)",
+            "language-desc": "L'application prend en charge les versions anglaise et française, si vous cliquez sur l'icône de langue dans le coin supérieur droit de l'écran, tout le site passe en français, puis cliquez à nouveau pour revenir à l'anglais.",
+            "forms-title": "Forms, validation, Pipe, Directive",
+            "form-desc": "Créer une page de projet est construite à l'aide d'un formulaire réactif, et la page de contact est construite à l'aide d'un formulaire basé sur des modèles. Les deux pages implémentaient la validation de formulaire et créaient un tuyau et une directive en devise pour convertir le montant en $ champs et reconvertir.",
+            "lazy-load-title": "Lazy Loading",
+            "lazy-load-desc": "Beaucoup de cas, l'utilisateur ne va que sur certaines pages, le chargement de Lazying est donc très important.",
+            "globel-handler-title": "Erreur Globle lors de la remise, Globle Afficher / Masquer le chargement de Spinner, jeton d’authentification JWT",
+            "globel-handler-desc": "Ceux-ci sont implémentés à l'aide de HttpInterceptor.",
+            "user-role-title": "Vérification du rôle de l'utilisateur",
+            "user-role-desc": "Par défaut, tous les utilisateurs donnent un accès administrateur. Vous pouvez donc voir l'onglet Admin et vous pouvez accéder à cette page. Si vous vous connectez en tant qu'utilisateur normal (le compte d'utilisateur et le mot de passe sont sur la page Admin), vous ne pourrez pas voir. Onglet Admin / page."
+        }
+    }
+}

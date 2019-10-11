@@ -1,0 +1,51 @@
+
+        
+.main-content {
+    overflow: auto;
+    background-color: #f1f3f9;
+    position: absolute;
+    right: 16%;
+    top: 18%;
+    width: 28vmax;
+    min-height: 300px;
+    max-height: 450px;
+    padding: 20px 20px;
+    border-radius: 3px;
+
+    .section-title {
+        font-size: 26px;
+        font-family: Verdana, sans-serif;
+        font-weight: bold;
+        color: #0e0e10de;
+    }
+    
+    .section-body {
+        font-family: Trebuchet MS, sans-serif;
+        margin-top: 30px;
+        font-size: 16px;
+
+        .section-paragraph {
+            margin-top: 20px;
+        }
+
+        .section-notes {
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        a.highlight {
+            font-size: 18px;
+            color: #379808ed;
+            margin-left: 5px;
+        }
+    }
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+    height: 22px;
+}
+
+.link {
+    margin-left: 6px;
+}
+

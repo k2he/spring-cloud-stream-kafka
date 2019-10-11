@@ -1,0 +1,184 @@
+{
+    "button": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "login": "Login",
+        "submit": "Submit",
+        "yes": "Yes",
+        "no": "No"
+    },
+    "field_validation": {
+        "error": {
+            "required": "This field is required",
+            "min-length": "You have to enter more than {{length}} characters",
+            "email": "Please enter a valid email address",
+            "phone": "Please enter a valid phone number"
+        }
+    },
+    "page-under-construction-message": "This Feature is still under Construction~!",
+    
+    "header-page": {
+        "title": "Kakfa Demo",
+        "navlinks": {
+            "home": "Home",
+            "about": "Desgin",
+            "projects": "Projects",
+            "kafka": "Kafka",
+            "contacts": "Contacts",
+            "admin": "Admin"
+        },
+        "greeting": "Welcome back: {{name}}",
+        "login": "Log in",
+        "logout": "Log out",
+        "changeLanguage": "Français"
+    },
+    "footer-page": {
+        "copyright": "Copyright © 2018 Kai He",
+        "contact": "Phone",
+        "email": "Email"
+    },
+    "home-page": {
+        "title": "Angular and Microservice Demo",
+        "subtitle": "This application is built using Angular on front-end and Spring Cloud Microservice on back-end.",
+        "design-description": "For more detail about Arcetehcture design and Technology stack, Please visist:",
+        "design-link-description": "Design Page",
+        "notes-part1": "Notes: Please use Chrome",
+        "notes-part2": "since currently features only tested in chrome. Sorry for the inconvinience!"
+    },
+    "login-page": {
+        "title": "Please Sign In",
+        "or": "OR",
+        "google": "Log in with Google",
+        "facebook": "Log in with Facebook",
+        "facebook-tip": "Have not configured Facebook yet!",
+        "username": "Username",
+        "password": "Password"
+    },
+    "projects-page": {
+        "delete-success-message": "Project Deleted Succesfully! 😎",
+        "update-success-message": "Project Updated Succesfully! 😎",
+        "create-success-message": "Project Created Succesfully! 😎",
+        "naviItems": {
+            "all": "All Projects",
+            "create": "Create New",
+            "in-progress": "In progress Projects",
+            "schedule": "Projects Schedule",
+            "completed": "Completed Projects"
+        },
+        "all-projects-page": {
+            "title": "All Projects",
+            "search": "Search:",
+            "table": {
+                "header-project": "Project Name",
+                "header-desc": "Description",
+                "header-due": "Due Date",
+                "header-skill": "Required Skills",
+                "header-cost": "Estimated Cost",
+                "header-status": "Status",
+                "header-action": "Actions"
+            },
+            "delete-title": "Are you sure you want to delete selected project?",
+            "delete-content": "Please click Yes to continue."
+        },
+        "in-progress-page": {
+            "title": "In Progress Projects"
+        },
+        "new-project-page": {
+            "create-project-title": "Create New Project",
+            "edit-project-title": "Edit Project Detail",
+            "form": {
+                "field-name": "Project Name",
+                "field-skill": "Skills Required",
+                "field-cost": "Estimated Cost",
+                "field-cost-excced-max": "Wow, it's too expensive, we not gonna do it !!!",
+                "field-due": "Choose a Project due Date",
+                "field-desc": "Project Description"
+            }
+        }
+    },
+    "contact-us-page": {
+        "title": "Contact Us",
+        "sub-title": "Fill out the form and we will call you back",
+        "form": {
+            "field-name": "Name",
+            "field-email": "Email",
+            "field-phone": "Phone Number",
+            "field-subject": "Subject",
+            "field-message": "Message"
+        },
+        "create-success-message": "We have received your feedbacks. Thank you! 😎"
+    },
+    "admin-page": {
+        "naviItems": {
+            "manage": "Manage User",
+            "register": "Register User"
+        },
+        "manage-page": {
+            "title": "Manage User",
+            "explaination": "If you can see this page, you are logged in as Admin",
+            "detail-title": "You can log in use Normal User below, you shouldn't see this page.",
+            "username-detail": "Username: test1",
+            "password-detail": "Password: 12345"
+        },
+        "register-page": {
+            "title": "Register User"
+        }
+    },
+    "about-page": {
+        "naviItems": {
+            "backend": "Back-end Design",
+            "frontend": "Front-end Design"
+        },
+        "source-code": "Source Code: ",
+        "backend-page": {
+            "title": "Back-end Architecture",
+            "source-code-github": "My GitHub (Backend)",
+            "source-code-dockerhub": "Docker Hub",
+            "source-code-swagger": "APIs Swagger Link",
+            "design-description": "REST APIs built using Microservice Archtecture. Desgin diagram as below:",
+            "tech-list-title": "Technologies:",
+            "tech-desc-item1": "Spring Boot 2, Spring Security 5, Spring Cloud, Spring AOP",
+            "tech-desc-item2": "JPA (Hibernate), mySQL",
+            "tech-desc-item3": "Database Auth, Oauth2 (Social Auth), JWT, Private & Pubilc keys",
+            "tech-desc-item4": "Swagger2, Log4j, Lambok, Sleuth, Hystrix, Spring Retry, Zipkin",
+            "tech-desc-item5": "Docker, Docker Compose, Kubernetes, AWS (EC2, RDS)",
+            "security-title": "Security Design and workflow",
+            "security-desc": "Using JWT token (included Expiration time and User role) to validate User access. First time when user trying to login, redirect to Authentication Server.",
+            "auth-title": "Authentication Server Design",
+            "auth-desc1": "1) If user choose to login using username and password, then validate again User information stored in Database along with User role.",
+            "auth-desc2": "2) If user choose to login using social login, redirect to Social Login page, if user grant access (email and profile). System will automatically create a new account using Email.",
+            "auth-text": "On success login, JWT token will generated containing User roles, and sign with Private Key from Key Store, and return as login response. Also and there is a REST endpoint to access Public Key.",
+            "key-title": "Public & Private Key",
+            "key-desc": "Public and Private key are stored in Key Store to prevent outside getting private key.",
+            "service-title": "Each Individual Services",
+            "service-desc1": "Call to Each individule Service also need be validated using JWT token to improve security on individual service level.",
+            "service-desc2": "Each Service will fetch Public key from Auth Server and then validate incoming JWT token. If validation fail, request get rejected. If success, resoure will be returned.",
+            "deploy-title" : "Deployment",
+            "deploy-desc1": "Each service contains a Dockerfile, and docker images are on docker hub:",
+            "deploy-desc2": "It can be deployed to Cloud provide using Kubernetes or Cloud Provider have it's own tool for easy deployment. For instance: AWS we can use ECS to deploy docker into EC2 instances and do auto-scaling."
+        },
+        "frontend-page": {
+            "title": "Front-end Design",
+            "source-code-github": "My GitHub (Frontend)",
+            "source-code-dockerhub": "Docker Hub",
+            "tech-desc-title": "Front-end Technologies:",
+            "tech-desc-item1": "Angular 5 (Migrated to 7)",
+            "tech-desc-item2": "Angular Material",
+            "tech-desc-item3": "SCSS, RxJS 6.3, NGX Translate(Muti-language)",
+            "feature-title": "Front-end Features:",
+            "feature-desc": "This site was build just for learning Angular, so tried to use all Angular Feature and to follow best coding standard.",
+            "structure-title": "Code Structure",
+            "structure-desc": "Header, Footer, Home, Login, Page Not Found componments are in Core Module, and shared directives, pipes and shared components are under Shared Module.",
+            "language-title": "Mutiple Language - English/French for now (i18n)",
+            "language-desc": "The application support English and French version, if you click on Language Icon on top right corner of screen, whole site will switched to French, and click again, bring you back to English.",
+            "forms-title": "Forms, validation, Pipe, Directive",
+            "form-desc": "Create Project Page is built use Reactive Form, and Contact Page is built using Template-driven Form. Both pages implemented form validation, and created an currency Pipe and Directive to convert amount into $ field and convert back.",
+            "lazy-load-title": "Lazy Loading",
+            "lazy-load-desc": "Lot of case, user only goes to certain pages, so Lazying loading is really important.",
+            "globel-handler-title": "Globle Error handing, Globle Show/Hide loading Spinner, JWT authentication token",
+            "globel-handler-desc": "These are implemented using HttpInterceptor.",
+            "user-role-title": "User Role check",
+            "user-role-desc": "By Default, all user is giving Admin access, so you can see Admin tab and you are able to visit that page, if you login as Normal User (User account and password is on Admin page), you won't be able to see Admin tab/page."
+        }
+    }
+}

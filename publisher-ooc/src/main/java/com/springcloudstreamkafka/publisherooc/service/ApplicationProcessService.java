@@ -1,16 +1,17 @@
 package com.springcloudstreamkafka.publisherooc.service;
 
 import javax.validation.constraints.NotNull;
+
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
+
 import com.kafkastream.demo.lib.model.ProcessEvent;
-import com.kafkastream.demo.lib.model.ProcessResult;
-import com.kafkastream.demo.lib.model.ProcessStatus;
 import com.kafkastream.demo.lib.model.ServiceName;
 import com.springcloudstreamkafka.publisherooc.stream.ApplicationProcessStreams;
+
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,0 +1,57 @@
+<div class="content-with-no-background">
+	<div class="page-main-container">
+		<div class="content-title">Demo for Kafka Features:</div>
+		<div class="content-main">
+		  <mat-card>
+			<div class="row title">Start Process Applications F1 to F20</div>
+			<div class="row">we will call OOC (origination and orchestration) servive to start processing application F1, F2 ... F20.</div>
+			<div class="startProcessMessage" *ngIf="testProcessStartedMessage">{{ testProcessStartedMessage }}</div>
+			<mat-card-actions>
+			  	<button mat-button class="button" (click)="testProcess20Apps()">Start</button>
+			  	<button mat-button class="button" (click)="getApplicationsProcessDetailData()">Get Processing Details</button>
+			  	<button mat-button class="button" (click)="getApplicationsProcessSummary()">Get Processing Summary</button>
+			
+			</mat-card-actions>
+
+			<div class="margin-top-20" *ngIf="isFinished">
+				<span>Process Finished in {{ durationSeconds }} Seconds</span>
+			</div>
+
+		  	<div class="margin-top-20">
+				<mat-table #table [dataSource]="dataSource" matSort class="table-width">
+					<ng-container matColumnDef="applicationNumber">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Application Number</mat-header-cell>
+						<mat-cell *matCellDef="let application">{{application.applicationNumber}} </mat-cell>
+					</ng-container>
+	
+					<ng-container matColumnDef="bureauStatus">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Bureau Status</mat-header-cell>
+						<mat-cell *matCellDef="let application"> {{application.bureauStatus}} </mat-cell>
+					</ng-container>
+	
+					<ng-container matColumnDef="ajdcStatus">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Ajudication Status</mat-header-cell>
+						<mat-cell *matCellDef="let application"> {{application.ajdcStatus}} </mat-cell>
+					</ng-container>
+	
+					<ng-container matColumnDef="createdDate">
+						<mat-header-cell *matHeaderCellDef>Created Date</mat-header-cell>
+						<mat-cell *matCellDef="let application"> {{application.createdDate}} </mat-cell>
+					</ng-container>
+	
+					<ng-container matColumnDef="lastUpdatedDate">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Last Update Date</mat-header-cell>
+						<mat-cell *matCellDef="let application">  {{application.lastUpdatedDate}} </mat-cell>
+					</ng-container>
+	
+					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+				</mat-table>
+		  	</div>
+			<!-- <mat-card-content>
+				<div class="row" *ngIf="testProcess20AppsResult"><pre>{{testProcess20AppsResult}}</pre></div>
+			</mat-card-content> -->
+		  </mat-card>
+		</div>
+	</div>
+</div>

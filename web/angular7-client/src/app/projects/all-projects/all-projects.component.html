@@ -1,0 +1,62 @@
+<div>
+	<div class="content-title">{{ 'projects-page.all-projects-page.title' | translate }}</div>
+	<div class="content-main">
+		<div class="mat-elevation-z8">
+			<div class="mat-header">
+				<mat-form-field>
+					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'projects-page.all-projects-page.search' | translate }}">
+				</mat-form-field>
+			</div>
+
+			<mat-table #table [dataSource]="dataSource" matSort>
+
+				<ng-container matColumnDef="name">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'projects-page.all-projects-page.table.header-project' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let project">{{project.projectName}} </mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="description">
+					<mat-header-cell *matHeaderCellDef>{{ 'projects-page.all-projects-page.table.header-desc' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let project"> {{project.projectSummary}} </mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="due">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'projects-page.all-projects-page.table.header-due' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let project"> {{project.dueDate | date}} </mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="skills">
+					<mat-header-cell *matHeaderCellDef>{{ 'projects-page.all-projects-page.table.header-skill' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let project"> {{project.requiredSkills}} </mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="estimatedCost">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'projects-page.all-projects-page.table.header-cost' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let project"> {{project.estimatedCost | customCurrency }} </mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="status">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'projects-page.all-projects-page.table.header-status' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let project"> {{project.projectStatus.description}} </mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef></mat-header-cell>
+					<mat-cell *matCellDef="let project">
+						<button mat-button [matMenuTriggerFor]="menu">{{ 'projects-page.all-projects-page.table.header-action' | translate }}</button>
+						<mat-menu #menu="matMenu">
+							<button mat-menu-item [routerLink]="['/projects/edit', project.projectId]">{{ 'button.edit' | translate }}</button>
+							<button mat-menu-item (click)="onDelete(project.projectId)">{{ 'button.delete' | translate }}</button>
+						</mat-menu>
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+			</mat-table>
+		</div>
+
+
+	</div>
+
+</div>

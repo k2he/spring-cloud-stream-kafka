@@ -1,7 +1,9 @@
 package com.springcloudstreamkafka.publisherooc.service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,6 +15,7 @@ import com.kafkastream.demo.lib.model.ProcessEvent;
 import com.kafkastream.demo.lib.model.ProcessResult;
 import com.kafkastream.demo.lib.model.ProcessStatus;
 import com.kafkastream.demo.lib.model.ServiceName;
+import com.springcloudstreamkafka.publisherooc.dto.ApplicationStatusDetails;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationLog;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationProcess;
 import com.springcloudstreamkafka.publisherooc.model.ApplicationStatus;
@@ -30,23 +33,26 @@ import lombok.extern.slf4j.Slf4j;
 public class ApplicationService {
 
 	@NotNull
-	private final ApplicationProcessRepository applicationProcessRespository;
+	private final ApplicationProcessRepository applicationProcessRepository;
 
 	@NotNull
-	private final ApplicationStatusRepository applicationStatusRespository;
+	private final ApplicationStatusRepository applicationStatusRepository;
 
 	@NotNull
-	private final ApplicationLogRepository applicationLogRespository;
+	private final ApplicationLogRepository applicationLogRepository;
 
 	public ApplicationStatus initProcess(String applicationNumber) {
-		ApplicationStatus appStatus = ApplicationStatus.builder().applicationNumber(applicationNumber)
-				.ajdcStatus(ProcessStatus.PENDING).bureaStatus(ProcessStatus.PENDING).build();
-		return applicationStatusRespository.save(appStatus);
+		ApplicationStatus appStatus = ApplicationStatus.builder()
+				.applicationNumber(applicationNumber)
+				.ajdcStatus(ProcessStatus.INPROGRESS)
+				.bureauStatus(ProcessStatus.INPROGRESS)
+				.createdDate(LocalDateTime.now()).build();
+		return applicationStatusRepository.save(appStatus);
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public ApplicationStatus getAppStatus(String applicationNumber) {
-		return applicationStatusRespository.findById(applicationNumber).orElse(null);
+		return applicationStatusRepository.findById(applicationNumber).orElse(null);
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
@@ -67,17 +73,17 @@ public class ApplicationService {
 			appStatus = initProcess(applicationNumber);
 		} else {
 			if (bureaStatus != null) {
-				appStatus.setBureaStatus(bureaStatus);
+				appStatus.setBureauStatus(bureaStatus);
 			} else if (ajdcStatus != null) {
 				appStatus.setAjdcStatus(ajdcStatus);
 			}
 
 			if (bureaStatus != null && ajdcStatus != null) {
-				appStatus = applicationStatusRespository.saveAndFlush(appStatus);
+				appStatus = applicationStatusRepository.saveAndFlush(appStatus);
 			}
 		}
 
-		logAppProcess(applicationNumber, action, "Updating Service static in Database", appStatus.getBureaStatus(),
+		logAppProcess(applicationNumber, action, "Updating Service static in Database", appStatus.getBureauStatus(),
 				appStatus.getAjdcStatus());
 
 		return appStatus;
@@ -86,7 +92,7 @@ public class ApplicationService {
 	public void addTolog(String applicationNumber, String logString) {
 		log.info(logString);
 		ApplicationLog logEvent = ApplicationLog.builder().applicationNumber(applicationNumber).log(logString).build();
-		applicationLogRespository.save(logEvent);
+		applicationLogRepository.save(logEvent);
 	}
 
 	// Log event such as trigger start of burea
@@ -94,7 +100,7 @@ public class ApplicationService {
 		ApplicationStatus appStatus = getAppStatus(event.getApplicationNumber());
 		if (appStatus != null) {
 			logAppProcess(event.getApplicationNumber(), event.getAction(), event.getActionDesc(),
-					appStatus.getBureaStatus(), appStatus.getAjdcStatus());
+					appStatus.getBureauStatus(), appStatus.getAjdcStatus());
 		}
 	}
 
@@ -105,20 +111,61 @@ public class ApplicationService {
 		ApplicationStatus appStatus = getAppStatus(result.getApplicationNumber());
 		if (appStatus != null) {
 			logAppProcess(result.getApplicationNumber(), result.getAction(), result.getActionDesc(),
-					appStatus.getBureaStatus(), appStatus.getAjdcStatus());
+					appStatus.getBureauStatus(), appStatus.getAjdcStatus());
 		}
 	}
 
 	public void logAppProcess(String applicationNumber, String applicationAction, String applicationDesc,
 			ProcessStatus bureaStatus, ProcessStatus ajdcStatus) {
 		ApplicationProcess process = ApplicationProcess.builder().applicationNumber(applicationNumber)
-				.applicationAction(applicationAction).applicationDesc(applicationDesc).bureaStatus(bureaStatus)
+				.applicationAction(applicationAction).applicationDesc(applicationDesc).bureauStatus(bureaStatus)
 				.ajdcStatus(ajdcStatus).build();
-		applicationProcessRespository.save(process);
+		applicationProcessRepository.save(process);
 	}
 
 	public static String getCurrentTimeString() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:ms");
 		return LocalDateTime.now().format(formatter);
+	}
+	
+	// Below methods are for UI use
+	public ApplicationStatusDetails getAllAppStatus() {
+		List<ApplicationStatus> allAppStatus = applicationStatusRepository.findAll();
+		
+		if (allAppStatus != null && allAppStatus.size() > 0) {
+			// Look for the last record updated time
+			LocalDateTime startedTime = allAppStatus.get(0).getCreatedDate();
+			LocalDateTime finishedTime = allAppStatus.get(0).getLastUpdatedDate();
+			boolean isProcessFinished = true;
+			
+			for (ApplicationStatus application : allAppStatus) {
+				// Check if process finished 
+				if (application.getAjdcStatus().equals(ProcessStatus.INPROGRESS)
+						|| application.getBureauStatus().equals(ProcessStatus.INPROGRESS)) {
+					isProcessFinished = false;
+					break;
+				}
+				
+				if (application.getCreatedDate().isBefore(startedTime)) {
+					startedTime = application.getLastUpdatedDate();
+				}
+				
+				if (application.getLastUpdatedDate().isAfter(finishedTime)) {
+					finishedTime = application.getLastUpdatedDate();
+				}
+			}
+			
+			Duration processDuration = isProcessFinished ? Duration.between(startedTime, finishedTime) : null;
+			Long durationInSeconds = isProcessFinished ? processDuration.getSeconds() : null;
+			
+			return ApplicationStatusDetails.builder()
+					.applicationStatus(allAppStatus)
+					.processDuration(processDuration)
+					.processDurationInSeconds(durationInSeconds)
+					.isProcessFinished(isProcessFinished).build();
+		} else {
+			return ApplicationStatusDetails.builder()
+					.applicationStatus(allAppStatus).build();
+		}
 	}
 }

@@ -1,20 +1,25 @@
 package com.springcloudstreamkafka.publisherooc.model;
 
 import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.springframework.data.annotation.LastModifiedDate;
+
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kafkastream.demo.lib.model.ProcessStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Enumerated;
-import javax.persistence.EnumType;
 
 @Data
 @Entity
@@ -29,11 +34,16 @@ public class ApplicationStatus {
 	private String applicationNumber;
 
 	@Enumerated(EnumType.STRING)
-	private ProcessStatus bureaStatus;
+	private ProcessStatus bureauStatus;
 
 	@Enumerated(EnumType.STRING)
 	private ProcessStatus ajdcStatus;
 	
 	@LastModifiedDate
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime lastUpdatedDate;
+	
+	@CreatedDate
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime createdDate;
 }

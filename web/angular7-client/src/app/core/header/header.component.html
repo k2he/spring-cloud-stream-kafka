@@ -1,0 +1,46 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="nav-bar">
+    <img [@showUp] class="nav-logo" src="/assets/images/td_logo.png" />
+    <a routerLink="/home" [@showUp] class="nav-title" translate>header-page.title</a>
+
+    <span class="spacer"></span>
+
+    <div class="nav-links">
+
+      <button mat-button routerLink="/home" [routerLinkActive]="['active']" on>{{ 'header-page.navlinks.home' | translate }}</button>
+      <!-- <button mat-button routerLink="/about" [routerLinkActive]="['active']" on>{{ 'header-page.navlinks.about' | translate }}</button>
+      <div class="display-inline">
+        <div class="new-project-circle" *ngIf="newProjectNum">{{newProjectNum}}</div>
+        <button mat-button routerLink="/projects" [routerLinkActive]="['active']" translate>{{ 'header-page.navlinks.projects' | translate }}</button>
+      </div> -->
+      <button mat-button routerLink="/kafka" [routerLinkActive]="['active']" translate>{{ 'header-page.navlinks.kafka' | translate }}</button>
+      <!-- <button mat-button routerLink="/contact" [routerLinkActive]="['active']">{{ 'header-page.navlinks.contacts' | translate }}</button>
+      <ng-template [ngIf]="adminGuard.canActivate()">
+        <button mat-button routerLink="/admin" [routerLinkActive]="['active']">{{ 'header-page.navlinks.admin' | translate }}</button>
+      </ng-template> -->
+    </div>
+
+    <div class="toolBar">
+      <div *ngIf="user" class="welcome">
+        <div class="message">{{ 'header-page.greeting' | translate: {name: user.name} }}</div>
+        <img class="user-image-circular" [src]="user.imageUrl">
+      </div>
+      <div class="tools">
+        <a *ngIf="!isLoggedIn" routerLink="/login" class="display-inline " matTooltip="{{ 'header-page.login' | translate }}">
+          <i class="material-icons">account_box</i>
+          <!--<i class="material-icons">face</i>-->
+          <!--<i class="material-icons">account_circle</i>-->
+        </a>
+        <a routerLink="" *ngIf="isLoggedIn" (click)='logout()' class="display-inline " matTooltip="{{ 'header-page.logout' | translate }}">
+          <i class="material-icons">directions_run</i>
+        </a>
+        <!-- <a routerLink="" class="display-inline" matTooltip="{{Change Language}}" (click)="useLanguage('en')"> -->
+        <a routerLink="" class="display-inline" matTooltip="{{ 'header-page.changeLanguage' | translate }}" (click)="changeLanguage()">
+          <i class="material-icons">language</i>
+        </a>
+      </div>
+    </div>
+    <div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

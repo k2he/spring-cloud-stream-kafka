@@ -1,0 +1,49 @@
+<div>
+	<div class="content-title">{{isOnEditMode ? ('projects-page.new-project-page.edit-project-title' | translate) : ('projects-page.new-project-page.create-project-title'
+		| translate)}}</div>
+	<div class="content-main">
+		<div>
+			<form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="form-container width-600px  margin-top-50px">
+
+				<mat-form-field>
+					<input matInput type="text" placeholder="{{ 'projects-page.new-project-page.form.field-name' | translate }}" name="name"
+					 formControlName="name" [(ngModel)]="projectInfo.projectName">
+					<mat-error *ngIf="projectForm.controls['name'].errors?.required">{{ 'field_validation.error.required' | translate }}</mat-error>
+					<mat-error *ngIf="projectForm.controls['name'].errors?.minlength">{{ 'field_validation.error.min-length' | translate: {length: FIELD_MIN} }}</mat-error>
+				</mat-form-field>
+
+				<mat-form-field>
+					<input matInput type="text" placeholder="{{ 'projects-page.new-project-page.form.field-skill' | translate }}" name="skills"
+					 formControlName="skills" [(ngModel)]="projectInfo.requiredSkills">
+					<mat-error *ngIf="projectForm.controls['skills'].errors?.required">{{ 'field_validation.error.required' | translate }}</mat-error>
+				</mat-form-field>
+
+				<mat-form-field>
+					<input matInput placeholder="{{ 'projects-page.new-project-page.form.field-cost' | translate }}" name="cost" formControlName="cost"
+					 [(ngModel)]="projectInfo.estimatedCost" appCustomCurrencyFormatter>
+					<mat-error *ngIf="projectForm.controls['cost'].errors?.required">{{ 'field_validation.error.required' | translate }}</mat-error>
+					<mat-error *ngIf="projectForm.controls['cost'].errors?.max">{{ 'projects-page.new-project-page.form.field-cost-excced-max' | translate }}</mat-error>
+				</mat-form-field>
+
+				<mat-form-field>
+					<input matInput [matDatepicker]="picker" placeholder="{{ 'projects-page.new-project-page.form.field-due' | translate }}"
+					 name="dueDate" formControlName="dueDate" [(ngModel)]="projectInfo.dueDate">
+					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+					<mat-datepicker #picker></mat-datepicker>
+					<mat-error *ngIf="projectForm.controls['dueDate'].errors?.required">{{ 'field_validation.error.required' | translate }}</mat-error>
+				</mat-form-field>
+
+
+				<mat-form-field>
+					<textarea matInput placeholder="{{ 'projects-page.new-project-page.form.field-desc' | translate }}" rows="8" formControlName="description"
+					 [(ngModel)]="projectInfo.projectSummary"></textarea>
+					<mat-error *ngIf="projectForm.controls['description'].errors?.required">{{ 'field_validation.error.required' | translate }}</mat-error>
+					<mat-error *ngIf="projectForm.controls['description'].errors?.minlength">{{ 'field_validation.error.min-length' | translate: {length: FIELD_MIN} }}</mat-error>
+				</mat-form-field>
+
+				<button mat-button [disabled]="!projectForm.valid">{{ 'button.submit' | translate }}</button>
+			</form>
+		</div>
+	</div>
+
+</div>

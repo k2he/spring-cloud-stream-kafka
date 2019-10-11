@@ -1,0 +1,49 @@
+<div class="content-with-no-background">
+	<div class="page-main-container">
+		<div class="main-container">
+			<div class="content-title">{{ 'contact-us-page.title' | translate }}</div>
+
+			<div class="content-main">
+				<div>
+					<div>{{ 'contact-us-page.sub-title' | translate }}</div>
+					<form (ngSubmit)="onSubmit()" #contactUsForm='ngForm' class="form-container width-500px margin-top-50px">
+
+						<mat-form-field>
+							<input matInput placeholder="{{ 'contact-us-page.form.field-name' | translate }}" name="name" required [(ngModel)]="contectInfo.name">
+							<mat-error>{{ 'field_validation.error.required' | translate }}</mat-error>
+						</mat-form-field>
+
+						<mat-form-field>
+							<input matInput placeholder="{{ 'contact-us-page.form.field-email' | translate }}" email required [(ngModel)]="contectInfo.email"
+							 name="email" #email="ngModel">
+							<mat-error *ngIf="email.errors && (email.dirty || email.touched)">
+								<span *ngIf="email.errors.required; else invalid_email">{{ 'field_validation.error.required' | translate }}</span>
+								<ng-template #invalid_email>{{ 'field_validation.error.email' | translate }}</ng-template>
+							</mat-error>
+						</mat-form-field>
+
+						<mat-form-field>
+							<input matInput placeholder="{{ 'contact-us-page.form.field-phone' | translate }}" required [(ngModel)]="contectInfo.phoneNumber"
+							 name="phoneNumber" pattern="^\(?([0-9]{3})\)?[- ]?([0-9]{3})[- ]?([0-9]{4})$" #phoneNumber="ngModel">
+							<mat-error *ngIf="phoneNumber.errors?.required">{{ 'field_validation.error.required' | translate }}</mat-error>
+							<mat-error *ngIf="phoneNumber.errors?.pattern">{{ 'field_validation.error.phone' | translate }}</mat-error>
+						</mat-form-field>
+
+						<mat-form-field>
+							<input matInput placeholder="{{ 'contact-us-page.form.field-subject' | translate }}" required maxlength="50" [(ngModel)]="contectInfo.subject"
+							 name="subject">
+							<mat-error>{{ 'field_validation.error.required' | translate }}</mat-error>
+						</mat-form-field>
+						<mat-form-field>
+							<textarea matInput placeholder="{{ 'contact-us-page.form.field-message' | translate }}" required maxlength="500" rows="5"
+							 [(ngModel)]="contectInfo.message" name="message"></textarea>
+							<mat-error>{{ 'field_validation.error.required' | translate }}</mat-error>
+						</mat-form-field>
+						<button mat-button [disabled]="!contactUsForm.valid">{{ 'button.submit' | translate }}</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

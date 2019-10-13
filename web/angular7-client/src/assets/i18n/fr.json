@@ -24,6 +24,7 @@
             "about": "Conception",
             "projects": "Projects",
             "kafka": "kafka",
+            "kafka-connect" : "Kafka Connect",
             "contacts": "Nous contacter",
             "admin": "Admin"
         },

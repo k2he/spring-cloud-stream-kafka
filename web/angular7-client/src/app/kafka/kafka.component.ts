@@ -4,7 +4,7 @@ import { timer, Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil, catchError } from 'rxjs/operators';
 
 import { KafkaService } from '../api/kafka.service';
-import { ApplicationProcessStatus } from '../resources/applicationProcessStatus';
+import { ApplicationProcessStatus, ProcessingSummary } from '../resources/applicationProcessStatus';
 @Component({
   selector: 'app-kafka',
   templateUrl: './kafka.component.html',
@@ -16,8 +16,11 @@ export class KafkaComponent implements OnInit, AfterViewChecked {
   isFinished: boolean;
   durationSeconds: number;
 
+  processSummary: ProcessingSummary;
+  successCount: number;
+  failCount: number;
+
   private fetchData$:  Observable<ApplicationProcessStatus> = this.kafkaService.getApplicationsProcessDetailData();
-  private refreshInterval$: Observable<ApplicationProcessStatus>;
   private killTrigger: Subject<void> = new Subject();
 
   displayedColumns = ['applicationNumber', 'bureauStatus', 'ajdcStatus', 'createdDate', 'lastUpdatedDate'];
@@ -42,6 +45,7 @@ export class KafkaComponent implements OnInit, AfterViewChecked {
   }
 
   async testProcess20Apps() {
+    this.processSummary = null;
     this.testProcessStartedMessage = null;
     this.isFinished = false;
     const response = await this.kafkaService.startProcessApps(20).toPromise();
@@ -63,6 +67,10 @@ export class KafkaComponent implements OnInit, AfterViewChecked {
     this.setApplicationProcessStatusData(response);
   }
 
+  async getApplicationSummaryData(mins: number) {
+    this.processSummary = await this.kafkaService.getProcessingSummary(mins).toPromise();
+  }
+
   setApplicationProcessStatusData(appStatus: ApplicationProcessStatus) {
     this.isFinished = appStatus.processFinished;
     if (this.isFinished) {
@@ -71,10 +79,6 @@ export class KafkaComponent implements OnInit, AfterViewChecked {
     this.durationSeconds = appStatus.processDurationInSeconds;
     
     this.dataSource = new MatTableDataSource(appStatus.applicationStatus);
-  }
-
-  getApplicationsProcessSummary() {
-
   }
 
   ngOnDestroy(){

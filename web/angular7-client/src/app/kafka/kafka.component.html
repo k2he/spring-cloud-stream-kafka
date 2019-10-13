@@ -4,15 +4,29 @@
 		<div class="content-main">
 		  <mat-card>
 			<div class="row title">Start Process Applications F1 to F20</div>
-			<div class="row">we will call OOC (origination and orchestration) servive to start processing application F1, F2 ... F20.</div>
+			<div class="row description">we will call OOC (origination and orchestration) servive to start processing application F1, F2 ... F20.</div>
+			<div class="row description">1) Buearu Service takes <b>5</b> seconds to complete. <br> 2) Ajudication Service takes <b>1</b> second to complete.</div>
+			
 			<mat-card-actions class="margin-top-20">
 			  	<button mat-button class="button" (click)="testProcess20Apps()">Start</button>
 			  	<button mat-button class="button" (click)="getApplicationsProcessDetailData()">Get Processing Details</button>
-			  	<button mat-button class="button" (click)="getApplicationsProcessSummary()">Get Processing Summary</button>
+			  	<button mat-button class="button" (click)="getApplicationSummaryData(10)">Get Processing Summary (Past 10 minutes)</button>
+				<button mat-button class="button" (click)="getApplicationSummaryData(1440)">Get Processing Summary (Past 1 day)</button>
 			
 			</mat-card-actions>
 
-			<div class="margin-top-20" *ngIf="isFinished">
+			<div class="margin-top-20 result-section" *ngIf="processSummary">
+				<div>
+					<i class="material-icons success" matTooltip="COMPLETED">check_circle</i> 
+					<span> Applications: {{ processSummary.COMPLETED }}</span>
+				</div>
+				<div>
+					<i class="material-icons fail" matTooltip="FAILED">cancel</i> 
+					<span> Applications: {{ processSummary.FAILED }}</span>
+				</div>
+			</div>
+			
+			<div class="margin-top-20 result-section" *ngIf="isFinished">
 				<span>Process Finished in {{ durationSeconds }} Seconds</span>
 			</div>
 

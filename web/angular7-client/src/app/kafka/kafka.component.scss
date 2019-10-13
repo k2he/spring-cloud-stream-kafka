@@ -2,9 +2,18 @@
     width: 60%;
 }
 
+.description {
+    margin-top: 10px;
+    font-size: 15px;
+}
+
 .startProcessMessage {
     margin: 5px 0px;
     color: #8b0000;
+}
+
+.result-section {
+    // color: #0928e3;
 }
 
 .button {
@@ -17,12 +26,16 @@
 
 .ingrogress {
     color: #88afe0;
+    vertical-align: bottom;
 }
+
 
 .success {
     color: #18c318;
+    vertical-align: bottom;
 }
 
 .fail {
     color: #ff0000eb;
+    vertical-align: bottom;
 }

@@ -17,3 +17,8 @@ export interface ApplicationStartResponse {
     message: string;
 }
 
+export interface ProcessingSummary {
+    COMPLETED: number;
+    FAILED: number;
+}
+

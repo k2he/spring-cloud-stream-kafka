@@ -24,6 +24,7 @@
             "about": "Desgin",
             "projects": "Projects",
             "kafka": "Kafka",
+            "kafka-connect" : "Kafka Connect",
             "contacts": "Contacts",
             "admin": "Admin"
         },

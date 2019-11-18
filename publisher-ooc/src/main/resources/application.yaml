@@ -39,7 +39,7 @@ spring:
             application-result-in:
               consumer:
                 application-id: application-result-count
-      bindings:
+      bindings:   
         bureau-out:
           destination: bureau
           contentType: application/json

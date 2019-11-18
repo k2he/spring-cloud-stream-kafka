@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { SideNavItem } from '../shared/side-navi/side-navi.types'
+import { SideNavItem } from '../shared/side-navi/side-navi.types';
 
 @Component({
     selector: 'app-projects',

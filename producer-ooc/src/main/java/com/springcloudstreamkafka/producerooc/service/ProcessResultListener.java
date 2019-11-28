@@ -27,7 +27,7 @@ public class ProcessResultListener {
 	private final ApplicationService applicationService;
 	
 	@NotNull
-	private final ApplicationResultService applicationResultService;
+	private final ApplicationStreamingService applicationStreamingService;
 
 	@StreamListener(ApplicationProcessStreams.PROCESS_RESULT_INPUT)
 	public void handleProcessFinished(@Payload ProcessResult result) {
@@ -39,17 +39,19 @@ public class ProcessResultListener {
 				+ " Ajudication Status: " + appStatus.getAjdcStatus());
 		// CASE #1: Success
 		if (appStatus.getBureauStatus().equals(ProcessStatus.COMPLETED)
-				&& appStatus.getAjdcStatus().equals(ProcessStatus.COMPLETED)) {
+//				&& appStatus.getAjdcStatus().equals(ProcessStatus.COMPLETED)
+				&& appStatus.getTsysStatus().equals(ProcessStatus.COMPLETED)) {
 			applicationService.addTolog(result.getApplicationNumber(), "Application (" + result.getApplicationNumber()
 					+ ") Process Done at " + ApplicationService.getCurrentTimeString());
 			// Completeted Successfully
-			applicationResultService.sendApplicationResult(result.getApplicationNumber(), ProcessStatus.COMPLETED);
-		} else if (!appStatus.getBureauStatus().equals(ProcessStatus.INPROGRESS) && appStatus.getAjdcStatus().equals(ProcessStatus.FAILED)
-				|| appStatus.getBureauStatus().equals(ProcessStatus.FAILED) && !appStatus.getAjdcStatus().equals(ProcessStatus.INPROGRESS)
+			applicationStreamingService.sendApplicationResult(result.getApplicationNumber(), ProcessStatus.COMPLETED);
+		} else if (appStatus.getAjdcStatus().equals(ProcessStatus.FAILED)
+				|| appStatus.getBureauStatus().equals(ProcessStatus.FAILED) 
+				|| appStatus.getTsysStatus().equals(ProcessStatus.FAILED)
 				) {// CASE # 2 Failed
 			applicationService.addTolog(result.getApplicationNumber(), "Application Failed (" + result.getApplicationNumber()
 			+ ") Process Done at " + ApplicationService.getCurrentTimeString());
-			applicationResultService.sendApplicationResult(result.getApplicationNumber(), ProcessStatus.FAILED);
+			applicationStreamingService.sendApplicationResult(result.getApplicationNumber(), ProcessStatus.FAILED);
 		}
 	}
 }

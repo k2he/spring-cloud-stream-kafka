@@ -1,5 +1,5 @@
-package com.springcloudstreamkafka.consumeradjc.listener;
-
+package com.springcloudstreamkafka.consumertsys.listener;
+		
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +14,7 @@ import com.kafkastream.demo.lib.model.ProcessEvent;
 import com.kafkastream.demo.lib.model.ProcessResult;
 import com.kafkastream.demo.lib.model.ProcessStatus;
 import com.kafkastream.demo.lib.model.ServiceName;
-import com.springcloudstreamkafka.consumeradjc.stream.ApplicationProcessStreams;
+import com.springcloudstreamkafka.consumertsys.stream.ApplicationProcessStreams;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +22,14 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class AdjudicationListener {
+public class TSYSListener {
 
 	@NonNull
 	private final ApplicationProcessStreams applicationProcessStreams;
 
-	@StreamListener(ApplicationProcessStreams.AJDC_INPUT)
+	@StreamListener(ApplicationProcessStreams.TSYS_INPUT)
 	public void handleAjdcStart(@Payload ProcessEvent event) {
-		log.info("Ajudication event: {}", event);
+		log.info("TSYS event: {}", event);
 
 		// delay 1 seconds
 		try {
@@ -38,8 +38,8 @@ public class AdjudicationListener {
 			System.err.format("IOException: %s%n", e);
 		}
 
-		ProcessResult result = ProcessResult.builder().action("ajudication-compileted")
-				.actionDesc("Ajudication Service Completed, sending message back to Queue with Status Completed.")
+		ProcessResult result = ProcessResult.builder().action("TSYS-completed")
+				.actionDesc("TSYS Service Completed, sending message back to Queue with Status Completed.")
 				.serviceName(ServiceName.TSYS).status(ProcessStatus.COMPLETED)
 				.applicationNumber(event.getApplicationNumber()).time(LocalDateTime.now()).build();
 

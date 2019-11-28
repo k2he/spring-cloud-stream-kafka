@@ -9,6 +9,7 @@ export interface ApplicationStatus {
     applicationNumber: string;
     bureaStatus: string;
     ajdcStatus: string;
+    tsysStatus: string;
     lastUpdatedDate: Date;
     createdDate: Date;
 }

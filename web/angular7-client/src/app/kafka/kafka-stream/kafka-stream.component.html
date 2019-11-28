@@ -6,10 +6,15 @@
           <img class="kafka-stream-img" src="/assets/images/microservices-kafka-1.jpg" />
       </div>
 		  <mat-card class="margin-top-20">
-			  <div class="row title">Start Process Applications F1 to F20</div>
+			  <div class="row title">Start Application Life cycle for Application 1 to Application 20 (Total 20 Applications)</div>
         <div class="row description">we will call OOC (origination and orchestration) servive to start processing application F1, F2 ... F20.</div>
         <div class="row description">1) Buearu Service takes <b>5</b> seconds to complete. <br> 2) Ajudication Service takes <b>1</b> second to complete.</div>
-        
+        <div class="row description">3) Status Icon:</div>
+				<div>
+					<span class="margin-left-20"><i class="material-icons ingrogress" matTooltip="IN PROGRESS" >directions_run</i> - In Progress </span>
+					<span class="margin-left-20"><i class="material-icons success" matTooltip="COMPLETED" >check_circle</i> - Completed </span>
+					<span class="margin-left-20"><i class="material-icons fail" matTooltip="FAILED" >check_circle</i> - Failed </span>
+				</div>
         <mat-card-actions class="margin-top-20">
             <button mat-button class="button" (click)="testProcess20Apps()">Start</button>
             <button mat-button class="button" (click)="getApplicationsProcessDetailData()">Get Processing Details</button>
@@ -30,7 +35,7 @@
         </div>
 			
         <div class="margin-top-20 result-section" *ngIf="isFinished">
-          <span>Process Finished in {{ durationSeconds }} Seconds</span>
+          <span><b>Average Processing Time: {{ durationSeconds }} Seconds per Application</b></span>
         </div>
 
 		  	<div class="margin-top-20">
@@ -49,12 +54,12 @@
 						</mat-cell>
 					</ng-container>
 	
-					<ng-container matColumnDef="ajdcStatus">
-						<mat-header-cell *matHeaderCellDef mat-sort-header>Ajudication Status</mat-header-cell>
+					<ng-container matColumnDef="tsysStatus">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>TSYS Status</mat-header-cell>
 						<mat-cell *matCellDef="let application">
-							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.ajdcStatus == 'INPROGRESS')">directions_run</i>
-							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.ajdcStatus == 'COMPLETED')">check_circle</i>
-							<i class="material-icons fail" matTooltip="FAILED" *ngIf="(application.ajdcStatus == 'FAILED')">cancel</i>
+							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.tsysStatus == 'INPROGRESS')">directions_run</i>
+							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.tsysStatus == 'COMPLETED')">check_circle</i>
+							<i class="material-icons fail" matTooltip="FAILED" *ngIf="(application.tsysStatus == 'FAILED')">cancel</i>
 						</mat-cell>
 					</ng-container>
 	
@@ -67,7 +72,16 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>Last Update Date</mat-header-cell>
 						<mat-cell *matCellDef="let application">  {{application.lastUpdatedDate}} </mat-cell>
 					</ng-container>
-	
+<!-- 	
+					<ng-container matColumnDef="ajdcStatus">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Ajudication Status</mat-header-cell>
+						<mat-cell *matCellDef="let application">
+							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.ajdcStatus == 'INPROGRESS')">directions_run</i>
+							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.ajdcStatus == 'COMPLETED')">check_circle</i>
+							<i class="material-icons fail" matTooltip="FAILED" *ngIf="(application.ajdcStatus == 'FAILED')">cancel</i>
+						</mat-cell>
+					</ng-container>
+					 -->
 					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 					<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 				</mat-table>

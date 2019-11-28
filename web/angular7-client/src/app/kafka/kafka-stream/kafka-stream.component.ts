@@ -23,7 +23,7 @@ export class KafkaStreamComponent implements OnInit, AfterViewChecked {
   private fetchData$:  Observable<ApplicationProcessStatus> = this.kafkaService.getApplicationsProcessDetailData();
   private killTrigger: Subject<void> = new Subject();
 
-  displayedColumns = ['applicationNumber', 'bureauStatus', 'ajdcStatus', 'createdDate', 'lastUpdatedDate'];
+  displayedColumns = ['applicationNumber', 'bureauStatus', 'tsysStatus', 'createdDate', 'lastUpdatedDate'];
   dataSource;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -77,7 +77,7 @@ export class KafkaStreamComponent implements OnInit, AfterViewChecked {
     if (this.isFinished) {
       this.killTrigger.next();
     }
-    this.durationSeconds = appStatus.processDurationInSeconds;
+    this.durationSeconds = appStatus.processDurationInSeconds / appStatus.applicationStatus.length ;
     
     this.dataSource = new MatTableDataSource(appStatus.applicationStatus);
   }

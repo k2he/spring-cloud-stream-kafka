@@ -39,6 +39,9 @@ public class ApplicationStatus {
 	@Enumerated(EnumType.STRING)
 	private ProcessStatus ajdcStatus;
 	
+	@Enumerated(EnumType.STRING)
+	private ProcessStatus tsysStatus;
+	
 	@LastModifiedDate
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime lastUpdatedDate;

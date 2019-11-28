@@ -39,7 +39,7 @@ public class BureauListener {
         
 		//Adding a logic to fail app which application number end with Even number
 		String applicationNum = event.getApplicationNumber();
-		Integer number = new Integer(applicationNum.substring(1, applicationNum.length()));
+		Integer number = new Integer(applicationNum.substring(12, applicationNum.length()));
 //		log.info("Number is " + number + " number%5 == 0 ? " + (number%2 == 0));
 		ProcessStatus status = number % 5 == 0 ? ProcessStatus.FAILED : ProcessStatus.COMPLETED ;
 		

@@ -45,16 +45,16 @@ public class ApplicationProcessService {
 		messageChannel.send(MessageBuilder.withPayload(newEvent)
 				.setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build());
 
-		newEvent = ProcessEvent.builder().serviceName(ServiceName.AJUDCATION).action("Ajudication-start")
-				.actionDesc("Message send to Message Queue to trigger Ajudication Service")
+		newEvent = ProcessEvent.builder().serviceName(ServiceName.TSYS).action("TYSY-start")
+				.actionDesc("Message send to Message Queue to trigger TSYS Service")
 				.applicationNumber(event.getApplicationNumber()).time(event.getTime()).build();
 
 		// log the event
 		applicationService.logProcessEvent(newEvent);
 		applicationService.addTolog(event.getApplicationNumber(),
-				event.getApplicationNumber() + " Send Message to Message Queue to Start Ajudication Service.");
+				event.getApplicationNumber() + " Send Message to Message Queue to Start TSYS Service.");
 
-		messageChannel = applicationProcessStreams.outboundAjdc();
+		messageChannel = applicationProcessStreams.outboundTsys();
 		messageChannel.send(MessageBuilder.withPayload(newEvent)
 				.setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build());
 	}

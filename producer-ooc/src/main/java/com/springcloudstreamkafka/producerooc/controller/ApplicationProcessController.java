@@ -25,7 +25,7 @@ import com.springcloudstreamkafka.producerooc.model.ApplicationProcess;
 import com.springcloudstreamkafka.producerooc.repository.ApplicationLogRepository;
 import com.springcloudstreamkafka.producerooc.repository.ApplicationProcessRepository;
 import com.springcloudstreamkafka.producerooc.service.ApplicationProcessService;
-import com.springcloudstreamkafka.producerooc.service.ApplicationResultService;
+import com.springcloudstreamkafka.producerooc.service.ApplicationStreamingService;
 import com.springcloudstreamkafka.producerooc.service.ApplicationService;
 
 import lombok.NonNull;
@@ -45,7 +45,7 @@ public class ApplicationProcessController {
 	private final ApplicationService applicationService;
 	
 	@NotNull
-	private final ApplicationResultService applicationResultService;
+	private final ApplicationStreamingService applicationResultService;
 
 	@NotNull
 	private final ApplicationProcessRepository applicationProcessRespository;
@@ -76,7 +76,7 @@ public class ApplicationProcessController {
 				+ ApplicationService.getCurrentTimeString() + "============");
 
 		for (int i = 1; i <= numOfApplication; i++) {
-			String applicationNumber = "F" + i;
+			String applicationNumber = "Application " + i;
 			ProcessEvent event = ProcessEvent.builder().applicationNumber(applicationNumber).time(LocalDateTime.now())
 					.build();
 			applicationProcessService.startApplicationProcessing(event);
@@ -95,7 +95,7 @@ public class ApplicationProcessController {
 				+ ApplicationService.getCurrentTimeString() + "===========================");
 
 		for (int i = startNum; i <= endNum; i++) {
-			String applicationNumber = "F" + i;
+			String applicationNumber = "Application " + i;
 			ProcessEvent event = ProcessEvent.builder().applicationNumber(applicationNumber).time(LocalDateTime.now())
 					.build();
 			applicationProcessService.startApplicationProcessing(event);

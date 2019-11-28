@@ -41,6 +41,9 @@ public class ApplicationProcess {
 	@Enumerated(EnumType.STRING)
 	private ProcessStatus ajdcStatus;
 	
+	@Enumerated(EnumType.STRING)
+	private ProcessStatus tsysStatus;
+	
 	private String log;
 	
 	@CreatedDate

@@ -45,6 +45,7 @@ public class ApplicationService {
 		ApplicationStatus appStatus = ApplicationStatus.builder()
 				.applicationNumber(applicationNumber)
 				.ajdcStatus(ProcessStatus.INPROGRESS)
+				.tsysStatus(ProcessStatus.INPROGRESS)
 				.bureauStatus(ProcessStatus.INPROGRESS)
 				.createdDate(LocalDateTime.now()).build();
 		return applicationStatusRepository.save(appStatus);
@@ -58,15 +59,19 @@ public class ApplicationService {
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public ApplicationStatus updateAppStatus(ProcessResult result) {
 		if (result.getServiceName().equals(ServiceName.BUREAU)) {
-			return updateAppStatus(result.getApplicationNumber(), "update-burea-status", result.getStatus(), null);
+			return updateAppStatus(result.getApplicationNumber(), "update-burea-status", result.getStatus(), null, null);
+		} else if (result.getServiceName().equals(ServiceName.TSYS)) {
+			return updateAppStatus(result.getApplicationNumber(), "update-tsys-status", null,
+					result.getStatus(), null);
 		} else {
-			return updateAppStatus(result.getApplicationNumber(), "update-ajdudication-status", null,
+			return updateAppStatus(result.getApplicationNumber(), "update-ajdudication-status", null, null,
 					result.getStatus());
 		}
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public ApplicationStatus updateAppStatus(String applicationNumber, String action, ProcessStatus bureaStatus,
+			ProcessStatus tsysStatus,
 			ProcessStatus ajdcStatus) {
 		ApplicationStatus appStatus = getAppStatus(applicationNumber);
 		if (appStatus == null) {
@@ -74,16 +79,18 @@ public class ApplicationService {
 		} else {
 			if (bureaStatus != null) {
 				appStatus.setBureauStatus(bureaStatus);
+			} else if (tsysStatus != null) {
+				appStatus.setTsysStatus(tsysStatus);
 			} else if (ajdcStatus != null) {
 				appStatus.setAjdcStatus(ajdcStatus);
 			}
 
-			if (bureaStatus != null && ajdcStatus != null) {
+			if (bureaStatus != null && ajdcStatus != null && tsysStatus != null) {
 				appStatus = applicationStatusRepository.saveAndFlush(appStatus);
 			}
 		}
 
-		logAppProcess(applicationNumber, action, "Updating Service static in Database", appStatus.getBureauStatus(),
+		logAppProcess(applicationNumber, action, "Updating Service static in Database", appStatus.getBureauStatus(), appStatus.getTsysStatus(),
 				appStatus.getAjdcStatus());
 
 		return appStatus;
@@ -100,7 +107,7 @@ public class ApplicationService {
 		ApplicationStatus appStatus = getAppStatus(event.getApplicationNumber());
 		if (appStatus != null) {
 			logAppProcess(event.getApplicationNumber(), event.getAction(), event.getActionDesc(),
-					appStatus.getBureauStatus(), appStatus.getAjdcStatus());
+					appStatus.getBureauStatus(), appStatus.getTsysStatus(), appStatus.getAjdcStatus());
 		}
 	}
 
@@ -111,15 +118,18 @@ public class ApplicationService {
 		ApplicationStatus appStatus = getAppStatus(result.getApplicationNumber());
 		if (appStatus != null) {
 			logAppProcess(result.getApplicationNumber(), result.getAction(), result.getActionDesc(),
-					appStatus.getBureauStatus(), appStatus.getAjdcStatus());
+					appStatus.getBureauStatus(), appStatus.getTsysStatus(), appStatus.getAjdcStatus());
 		}
 	}
 
 	public void logAppProcess(String applicationNumber, String applicationAction, String applicationDesc,
-			ProcessStatus bureaStatus, ProcessStatus ajdcStatus) {
+			ProcessStatus bureaStatus, ProcessStatus tsysStatus, ProcessStatus ajdcStatus) {
 		ApplicationProcess process = ApplicationProcess.builder().applicationNumber(applicationNumber)
-				.applicationAction(applicationAction).applicationDesc(applicationDesc).bureauStatus(bureaStatus)
-				.ajdcStatus(ajdcStatus).build();
+				.applicationAction(applicationAction)
+				.applicationDesc(applicationDesc)
+				.bureauStatus(bureaStatus)
+				.ajdcStatus(ajdcStatus)
+				.tsysStatus(tsysStatus).build();
 		applicationProcessRepository.save(process);
 	}
 
@@ -140,7 +150,8 @@ public class ApplicationService {
 			
 			for (ApplicationStatus application : allAppStatus) {
 				// Check if process finished 
-				if (application.getAjdcStatus().equals(ProcessStatus.INPROGRESS)
+				if (application.getTsysStatus().equals(ProcessStatus.INPROGRESS)
+//						|| application.getAjdcStatus().equals(ProcessStatus.INPROGRESS)
 						|| application.getBureauStatus().equals(ProcessStatus.INPROGRESS)) {
 					isProcessFinished = false;
 					break;

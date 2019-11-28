@@ -45,9 +45,12 @@ spring:
           contentType: application/json
           producer:
             partition-count: 2
-        ajdc-out:
-          destination: mbna.ccms.adjudication
+        tsys-out:
+          destination: mbna.ccms.tsys
           contentType: application/json
+#        ajdc-out:
+#          destination: mbna.ccms.adjudication
+#          contentType: application/json
         process-result-in:
           group: processresultConsumers
           destination: mbna.ccms.processresult

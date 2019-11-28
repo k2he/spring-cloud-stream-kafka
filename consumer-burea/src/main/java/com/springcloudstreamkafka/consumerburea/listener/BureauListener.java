@@ -30,19 +30,21 @@ public class BureauListener {
 	public void handleBureauStart(@Payload ProcessEvent event) {
 		log.info("Start Bureau event: {}", event);
 		
-		// delay 5 seconds
-		try {
-			TimeUnit.SECONDS.sleep(5);
-		} catch (InterruptedException e) {
-            System.err.format("IOException: %s%n", e);
-        }
-        
 		//Adding a logic to fail app which application number end with Even number
 		String applicationNum = event.getApplicationNumber();
 		Integer number = new Integer(applicationNum.substring(12, applicationNum.length()));
-//		log.info("Number is " + number + " number%5 == 0 ? " + (number%2 == 0));
-		ProcessStatus status = number % 5 == 0 ? ProcessStatus.FAILED : ProcessStatus.COMPLETED ;
-		
+		ProcessStatus status = number % 5 == 0 ? ProcessStatus.FAILED : ProcessStatus.COMPLETED;
+		try {
+			
+			int sleepTimeInSecond = 3;
+			if (status == ProcessStatus.FAILED) { //Adding a logic to fail app which application number end with Even number
+				sleepTimeInSecond = 5; //Simulate time out.
+			} 
+			TimeUnit.SECONDS.sleep(sleepTimeInSecond);
+		} catch (InterruptedException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+
 		// Business Logic finished, send response to message queue.
 		ProcessResult result = ProcessResult.builder()
 				.action("bureau-compileted")

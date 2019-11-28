@@ -10,8 +10,9 @@ import com.kafkastream.demo.lib.model.ApplicationResultEvent;
 public interface ApplicationProcessStreams {
   public static final String BUREAU_OUTPUT = "bureau-out";
   
-//  public static final String AJDC_OUTPUT = "ajdc-out";
   public static final String TSYS_OUTPUT = "tsys-out";
+  
+  public static final String AJDC_OUTPUT = "ajdc-out";
   
   public static final String PROCESS_RESULT_INPUT = "process-result-in";
   
@@ -24,12 +25,12 @@ public interface ApplicationProcessStreams {
   
   @Output(BUREAU_OUTPUT)
   MessageChannel outboundBureau();
-
-//  @Output(AJDC_OUTPUT)
-//  MessageChannel outboundAjdc();
   
   @Output(TSYS_OUTPUT)
   MessageChannel outboundTsys();
+  
+  @Output(AJDC_OUTPUT)
+  MessageChannel outboundAjdc();
   
   @Input(PROCESS_RESULT_INPUT)
   SubscribableChannel inboundProcessResult();

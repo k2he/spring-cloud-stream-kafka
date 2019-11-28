@@ -61,11 +61,11 @@ public class ApplicationService {
 		if (result.getServiceName().equals(ServiceName.BUREAU)) {
 			return updateAppStatus(result.getApplicationNumber(), "update-burea-status", result.getStatus(), null, null);
 		} else if (result.getServiceName().equals(ServiceName.TSYS)) {
-			return updateAppStatus(result.getApplicationNumber(), "update-tsys-status", null,
-					result.getStatus(), null);
+			return updateAppStatus(result.getApplicationNumber(), "update-tsys-status", null, result.getStatus(), null);
+		} else if (result.getServiceName().equals(ServiceName.AJUDCATION)) {
+			return updateAppStatus(result.getApplicationNumber(), "update-ajdudication-status", null, null, result.getStatus());
 		} else {
-			return updateAppStatus(result.getApplicationNumber(), "update-ajdudication-status", null, null,
-					result.getStatus());
+			return null;
 		}
 	}
 
@@ -140,7 +140,7 @@ public class ApplicationService {
 	
 	// Below methods are for UI use
 	public ApplicationStatusDetails getAllAppStatus() {
-		List<ApplicationStatus> allAppStatus = applicationStatusRepository.findAll();
+		List<ApplicationStatus> allAppStatus = applicationStatusRepository.findAllByOrderByCreatedDateAsc();
 		
 		if (allAppStatus != null && allAppStatus.size() > 0) {
 			// Look for the last record updated time

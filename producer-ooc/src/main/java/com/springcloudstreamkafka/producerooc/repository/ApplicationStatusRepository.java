@@ -8,4 +8,5 @@ import com.springcloudstreamkafka.producerooc.model.ApplicationStatus;
 
 public interface  ApplicationStatusRepository extends JpaRepository<ApplicationStatus, String> {
 	public List<ApplicationStatus> findAllByOrderByLastUpdatedDateAsc();
+	public List<ApplicationStatus> findAllByOrderByCreatedDateAsc();
 }

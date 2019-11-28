@@ -40,7 +40,7 @@ public class AdjudicationListener {
 
 		ProcessResult result = ProcessResult.builder().action("ajudication-compileted")
 				.actionDesc("Ajudication Service Completed, sending message back to Queue with Status Completed.")
-				.serviceName(ServiceName.TSYS).status(ProcessStatus.COMPLETED)
+				.serviceName(ServiceName.AJUDCATION).status(ProcessStatus.COMPLETED)
 				.applicationNumber(event.getApplicationNumber()).time(LocalDateTime.now()).build();
 
 		MessageChannel messageChannel = applicationProcessStreams.outboundProcessResult();

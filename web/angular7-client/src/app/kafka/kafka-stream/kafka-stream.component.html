@@ -51,7 +51,7 @@
 					</ng-container>
 	
 					<ng-container matColumnDef="bureauStatus">
-						<mat-header-cell *matHeaderCellDef mat-sort-header>Bureau Status</mat-header-cell>
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Bureau</mat-header-cell>
 						<mat-cell *matCellDef="let application">
 							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.bureauStatus == 'INPROGRESS')">directions_run</i>
 							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.bureauStatus == 'COMPLETED')">check_circle</i>
@@ -60,7 +60,7 @@
 					</ng-container>
 	
 					<ng-container matColumnDef="tsysStatus">
-						<mat-header-cell *matHeaderCellDef mat-sort-header>TSYS Status</mat-header-cell>
+						<mat-header-cell *matHeaderCellDef mat-sort-header>TSYS</mat-header-cell>
 						<mat-cell *matCellDef="let application">
 							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.tsysStatus == 'INPROGRESS')">directions_run</i>
 							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.tsysStatus == 'COMPLETED')">check_circle</i>
@@ -68,6 +68,15 @@
 						</mat-cell>
 					</ng-container>
 	
+					<ng-container matColumnDef="ajdcStatus">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Adjudication</mat-header-cell>
+						<mat-cell *matCellDef="let application">
+							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.ajdcStatus == 'INPROGRESS')">directions_run</i>
+							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.ajdcStatus == 'COMPLETED')">check_circle</i>
+							<i class="material-icons fail" matTooltip="FAILED" *ngIf="(application.ajdcStatus == 'FAILED')">cancel</i>
+						</mat-cell>
+					</ng-container>
+
 					<ng-container matColumnDef="createdDate">
 						<mat-header-cell *matHeaderCellDef>Created Date</mat-header-cell>
 						<mat-cell *matCellDef="let application"> {{application.createdDate}} </mat-cell>
@@ -77,16 +86,7 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>Last Update Date</mat-header-cell>
 						<mat-cell *matCellDef="let application">  {{application.lastUpdatedDate}} </mat-cell>
 					</ng-container>
-<!-- 	
-					<ng-container matColumnDef="ajdcStatus">
-						<mat-header-cell *matHeaderCellDef mat-sort-header>Ajudication Status</mat-header-cell>
-						<mat-cell *matCellDef="let application">
-							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.ajdcStatus == 'INPROGRESS')">directions_run</i>
-							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.ajdcStatus == 'COMPLETED')">check_circle</i>
-							<i class="material-icons fail" matTooltip="FAILED" *ngIf="(application.ajdcStatus == 'FAILED')">cancel</i>
-						</mat-cell>
-					</ng-container>
-					 -->
+					
 					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 					<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 				</mat-table>

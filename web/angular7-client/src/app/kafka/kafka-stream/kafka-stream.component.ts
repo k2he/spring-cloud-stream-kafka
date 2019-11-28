@@ -23,7 +23,7 @@ export class KafkaStreamComponent implements OnInit, AfterViewChecked {
   private fetchData$:  Observable<ApplicationProcessStatus> = this.kafkaService.getApplicationsProcessDetailData();
   private killTrigger: Subject<void> = new Subject();
 
-  displayedColumns = ['applicationNumber', 'bureauStatus', 'tsysStatus', 'createdDate', 'lastUpdatedDate'];
+  displayedColumns = ['applicationNumber', 'bureauStatus', 'tsysStatus', 'ajdcStatus', 'createdDate', 'lastUpdatedDate'];
   dataSource;
 
   @ViewChild(MatSort) sort: MatSort;

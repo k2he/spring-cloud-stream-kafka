@@ -62,21 +62,11 @@ public class ApplicationStreamingService {
 		// Create a window state store contains the application process success or failed counts for 5 minute
 		KTable<Windowed<String>, Long> kTable = applicationResultStream
 				.map((key, value) -> {
-//					log.info(value.getApplicationNumber() + " " + value.getStatus());
 					return new KeyValue<String, String>(value.getStatus().toString(), "0");
 				})
 				.groupByKey()
 				.windowedBy(TimeWindows.of(Duration.ofMinutes(5).toMillis()))
 				.count(Materialized.as(ApplicationProcessStreams.APP_RESULT_COUNT_MATERALIZED_VIEW));
-
-		// Below Code will get all count for everything
-		// KTable<String, Long> kTable = applicationResultStream
-		// .map((key, value) -> {
-		// log.info(value.getApplicationNumber() + " " + value.getStatus());
-		// return new KeyValue<String, String>(value.getStatus().toString(), "0");
-		// })
-		// .groupByKey()
-		// .count(Materialized.as(ApplicationProcessStreams.SUCCESS_COUNT_MATERALIZED_VIEW));
 
 		kTable.toStream().foreach((key, value) -> log.info(key + " = " + value));
 	}
@@ -116,24 +106,4 @@ public class ApplicationStreamingService {
 		
 		return counts;
 	}
-	
-	//Below Code will get all count for everything
-//	public Map<String, Long> getCounts() {
-//		Map<String, Long> counts = new HashMap<>();
-//
-//		ReadOnlyKeyValueStore<String, Long> countStore = interactiveQueryService.getQueryableStore(
-//				ApplicationProcessStreams.APP_RESULT_COUNT_MATERALIZED_VIEW,
-//				QueryableStoreTypes.<String, Long>keyValueStore());
-//
-//		KeyValueIterator<String, Long> all = countStore.all();
-//
-//		if (all != null) {
-//			while (all.hasNext()) {
-//				KeyValue<String, Long> value = all.next();
-//				counts.put(value.key, value.value);
-//			}
-//			return counts;
-//		}
-//		return null;
-//	}
 }

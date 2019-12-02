@@ -33,7 +33,7 @@ public class AdjudicationListener {
 
 		// delay 1 seconds
 		try {
-			TimeUnit.SECONDS.sleep(1);
+			TimeUnit.SECONDS.sleep(2);
 		} catch (InterruptedException e) {
 			System.err.format("IOException: %s%n", e);
 		}

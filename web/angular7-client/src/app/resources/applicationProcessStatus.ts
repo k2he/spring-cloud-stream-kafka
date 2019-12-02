@@ -12,6 +12,7 @@ export interface ApplicationStatus {
     tsysStatus: string;
     lastUpdatedDate: Date;
     createdDate: Date;
+    processTimeInSeconds: number;
 }
 
 export interface ApplicationStartResponse {

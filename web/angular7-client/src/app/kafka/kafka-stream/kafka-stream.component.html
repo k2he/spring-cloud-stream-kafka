@@ -3,8 +3,8 @@
 		<div class="content-main">
       <div>
 				<div>
-						<span>Event Sourcing</span>
-						<span class="normal-api-text-position">Normail API calls</span>
+						<span class="important-text">Event Sourcing</span>
+						<span class="normal-api-text-position important-text">Normail API calls</span>
 				</div>
 				<div>
 					<img class="kafka-stream-img" src="/assets/images/microservices-kafka-1.jpg" />
@@ -13,8 +13,12 @@
 		  <mat-card class="margin-top-20">
 			  <div class="row title">Start Application Life cycle for Application 1 to Application 20 (Total 20 Applications)</div>
         <div class="row description">we will call OOC (origination and orchestration) servive to start processing Application 1, Application 2 ... Application 20.</div>
-        <div class="row description">1) Buearu Service takes <b>5</b> seconds to complete. <br> 2) Ajudication Service takes <b>1</b> second to complete.</div>
-        <div class="row description">3) Status Icon:</div>
+        <div class="row description">1) Buearu Service takes <b>3</b> seconds to complete. </div>
+				<div class="row description">2) TSYS Service takes <b>1</b> second to complete.</div>
+				<div class="row description">3) Ajudication Service takes <b>1</b> second to complete.</div>
+				<div class="row description">4) Error Service Time out is <b>5</b> seconds.</div>
+				
+				<div class="row description">5) Status Icon:</div>
 				<div>
 					<span class="margin-left-20"><i class="material-icons ingrogress" matTooltip="IN PROGRESS" >directions_run</i> - In Progress </span>
 					<span class="margin-left-20"><i class="material-icons success" matTooltip="COMPLETED" >check_circle</i> - Completed </span>
@@ -40,7 +44,7 @@
         </div>
 			
         <div class="margin-top-20 result-section" *ngIf="isFinished">
-          <span><b>Average Processing Time: {{ durationSeconds }} Seconds per Application</b></span>
+          <span class="important-text">Average Processing Time: {{ durationSeconds }} Seconds per Application</span>
         </div>
 
 		  	<div class="margin-top-20">
@@ -87,6 +91,11 @@
 						<mat-cell *matCellDef="let application">  {{application.lastUpdatedDate}} </mat-cell>
 					</ng-container>
 					
+					<!-- <ng-container matColumnDef="processTime">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Process Time (Second)</mat-header-cell>
+						<mat-cell *matCellDef="let application">  {{application.processTimeInSeconds}} </mat-cell>
+					</ng-container> -->
+
 					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 					<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 				</mat-table>

@@ -2,6 +2,7 @@ package com.springcloudstreamkafka.producerooc.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ApplicationService {
 	public ApplicationStatus initProcess(String applicationNumber) {
 		ApplicationStatus appStatus = ApplicationStatus.builder()
 				.applicationNumber(applicationNumber)
-				.ajdcStatus(ProcessStatus.INPROGRESS)
+				.ajdcStatus(ProcessStatus.PENDING)
 				.tsysStatus(ProcessStatus.INPROGRESS)
 				.bureauStatus(ProcessStatus.INPROGRESS)
 				.createdDate(LocalDateTime.now()).build();
@@ -151,12 +152,18 @@ public class ApplicationService {
 			for (ApplicationStatus application : allAppStatus) {
 				// Check if process finished 
 				if (application.getTsysStatus().equals(ProcessStatus.INPROGRESS)
-//						|| application.getAjdcStatus().equals(ProcessStatus.INPROGRESS)
-						|| application.getBureauStatus().equals(ProcessStatus.INPROGRESS)) {
+						|| application.getBureauStatus().equals(ProcessStatus.INPROGRESS)
+						|| application.getAjdcStatus().equals(ProcessStatus.INPROGRESS)) {
 					isProcessFinished = false;
 					break;
 				}
 				
+				if (application.getTsysStatus().equals(ProcessStatus.COMPLETED)
+						&& application.getBureauStatus().equals(ProcessStatus.COMPLETED)
+						&& application.getAjdcStatus().equals(ProcessStatus.COMPLETED)) { // Finished
+					Duration duration = Duration.between(application.getCreatedDate(), application.getLastUpdatedDate());
+					application.setProcessTimeInSeconds(duration.abs().getSeconds());
+				}
 				if (application.getCreatedDate().isBefore(startedTime)) {
 					startedTime = application.getLastUpdatedDate();
 				}

@@ -75,6 +75,16 @@ public class ProcessResultListener {
 
 		// log the event
 		applicationService.logProcessEvent(newEvent);
+		
+		//Update Status to I
+		ProcessResult inProgressStatus = ProcessResult.builder()
+											.serviceName(ServiceName.AJUDCATION)
+											.applicationNumber(applicationNumber)
+											.status(ProcessStatus.INPROGRESS)
+											.build();
+		
+		applicationService.updateAppStatus(inProgressStatus);
+		
 		applicationService.addTolog(applicationNumber,
 				applicationNumber + " Send Message to Message Queue to Start ADJCS Service.");
 

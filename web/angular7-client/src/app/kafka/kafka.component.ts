@@ -15,7 +15,9 @@ export class KafkaComponent implements OnInit {
     //TODO: later can load the list from database
     this.naviListItems = [
         { name: "Kafka Stream", url: "/kafka/kafka-stream", active: true },
-        { name: "Kafka Connect", url: "/kafka/kafka-connect", active: true }
+        { name: "Kafka Connect", url: "/kafka/kafka-connect", active: true },
+        { name: "Kafka KSQL", url: "/kafka/kafka-ksql", active: true },
+        { name: "Kafka Schema Registry", url: "/kafka/kafka-schema-registry", active: true },
     ];
   }
 

@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { KafkaComponent } from './kafka.component';
 import { KafkaStreamComponent } from './kafka-stream/kafka-stream.component';
 import { KafkaConnectComponent } from './kafka-connect/kafka-connect.component';
+import { KafkaKsqlComponent } from './kafka-ksql/kafka-ksql.component';
+import { KafkaSchemaRegistryComponent } from './kafka-schema-registry/kafka-schema-registry.component';
 
 const routes: Routes = [
   {
@@ -22,6 +24,14 @@ const routes: Routes = [
           {
               path: 'kafka-connect',
               component: KafkaConnectComponent,
+          },
+          {
+            path: 'kafka-ksql',
+            component: KafkaKsqlComponent,
+          },
+          {
+            path: 'kafka-schema-registry',
+            component: KafkaSchemaRegistryComponent,
           }
       ]
   }

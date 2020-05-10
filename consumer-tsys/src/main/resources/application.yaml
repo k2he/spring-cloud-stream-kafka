@@ -8,11 +8,11 @@ spring:
           brokers: localhost:9092
       bindings:
         tsys-in:
-          destination: mbna.ccms.tsys
+          destination: tsys
           # 1) same topic and different group => all instance will get copy of the message
           # 2) same topic and same group => only one instance in the same group will get the message
           # group: tsysConsumers2 
           contentType: application/json
         process-result-out:
-          destination: mbna.ccms.processresult
+          destination: processresult
           contentType: application/json

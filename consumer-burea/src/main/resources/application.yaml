@@ -12,8 +12,8 @@ spring:
             startOffset: latest
 #            startOffset: earliest //Means start from where last time server start reading message. Eg: Server started process F2 and crashed at F10, then restart server will read message from F2.
           group: bureauIn
-          destination: mbna.ccms.bureau
+          destination: bureau
           contentType: application/json
         process-result-out:
-          destination: mbna.ccms.processresult
+          destination: processresult
           contentType: application/json

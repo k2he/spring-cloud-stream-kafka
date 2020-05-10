@@ -41,25 +41,25 @@ spring:
                 application-id: application-result-count
       bindings:   
         bureau-out:
-          destination: mbna.ccms.bureau
+          destination: bureau
           contentType: application/json
           producer:
             partition-count: 2
         tsys-out:
-          destination: mbna.ccms.tsys
+          destination: tsys
           contentType: application/json
         ajdc-out:
-          destination: mbna.ccms.adjudication
+          destination: adjudication
           contentType: application/json
         process-result-in:
           group: processresultConsumers
-          destination: mbna.ccms.processresult
+          destination: processresult
           contentType: application/json
         application-result-out:
-          destination: mbna.ccms.applicationresult
+          destination: applicationresult
         application-result-in:
           group: applicationresultConsumers
-          destination: mbna.ccms.applicationresult
+          destination: applicationresult
           consumer:
             use-native-encoding: true
           

@@ -13,12 +13,12 @@
 		  <mat-card class="margin-top-20">
 			  <div class="row title">Start Application Life cycle for Application 1 to Application 20 (Total 20 Applications)</div>
         <div class="row description">we will call OOC (origination and orchestration) servive to start processing Application 1, Application 2 ... Application 20.</div>
-        <div class="row description">1) Buearu Service takes <b>3</b> seconds to complete. </div>
-				<div class="row description">2) TSYS Service takes <b>1</b> second to complete.</div>
-				<div class="row description">3) Ajudication Service takes <b>1</b> second to complete.</div>
+        <div class="row description">1) Service 1 takes <b>3</b> seconds to complete. </div>
+				<div class="row description">2) Service 2 takes <b>1</b> second to complete.</div>
+				<div class="row description">3) Service 3 takes <b>1</b> second to complete.</div>
 				<div class="row description">4) Error Service Time out is <b>5</b> seconds.</div>
-				
-				<div class="row description">5) Status Icon:</div>
+				<div class="row description">5) Service 3 will start only when both Service 1 & Service 2 complete <b>Successfully</b>.</div>
+				<div class="row description">6) Status Icon:</div>
 				<div>
 					<span class="margin-left-20"><i class="material-icons ingrogress" matTooltip="IN PROGRESS" >directions_run</i> - In Progress </span>
 					<span class="margin-left-20"><i class="material-icons success" matTooltip="COMPLETED" >check_circle</i> - Completed </span>
@@ -55,7 +55,7 @@
 					</ng-container>
 	
 					<ng-container matColumnDef="bureauStatus">
-						<mat-header-cell *matHeaderCellDef mat-sort-header>Bureau</mat-header-cell>
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Service 1</mat-header-cell>
 						<mat-cell *matCellDef="let application">
 							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.bureauStatus == 'INPROGRESS')">directions_run</i>
 							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.bureauStatus == 'COMPLETED')">check_circle</i>
@@ -64,7 +64,7 @@
 					</ng-container>
 	
 					<ng-container matColumnDef="tsysStatus">
-						<mat-header-cell *matHeaderCellDef mat-sort-header>TSYS</mat-header-cell>
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Service 2</mat-header-cell>
 						<mat-cell *matCellDef="let application">
 							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.tsysStatus == 'INPROGRESS')">directions_run</i>
 							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.tsysStatus == 'COMPLETED')">check_circle</i>
@@ -73,7 +73,7 @@
 					</ng-container>
 	
 					<ng-container matColumnDef="ajdcStatus">
-						<mat-header-cell *matHeaderCellDef mat-sort-header>Adjudication</mat-header-cell>
+						<mat-header-cell *matHeaderCellDef mat-sort-header>Service 3</mat-header-cell>
 						<mat-cell *matCellDef="let application">
 							<i class="material-icons ingrogress" matTooltip="IN PROGRESS" *ngIf="(application.ajdcStatus == 'INPROGRESS')">directions_run</i>
 							<i class="material-icons success" matTooltip="COMPLETED" *ngIf="(application.ajdcStatus == 'COMPLETED')">check_circle</i>

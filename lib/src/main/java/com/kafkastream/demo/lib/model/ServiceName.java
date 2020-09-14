@@ -1,10 +1,7 @@
-/**
- * 
- */
 package com.kafkastream.demo.lib.model;
 
 /**
- * @author hekai27
+ * @author kaihe
  *
  */
 public enum ServiceName {

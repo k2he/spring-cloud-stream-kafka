@@ -24,11 +24,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Run from Docker Image
 
-### Pull docker image from DockerHub: docker image pull victoryssmile/angular-app:cloudstreamkafka
+Pull docker image from DockerHub: docker image pull victoryssmile/angular-app:cloudstreamkafka
 
-### To start app: docker run -p 4200:80 -d victoryssmile/angular-app:cloudstreamkafka
-### Check image started: docker ps 
-### Kill container: docker container stop $containerId (from docker ps)
+To start app: docker run -p 4200:80 -d victoryssmile/angular-app:cloudstreamkafka
+
+Check image started: docker ps 
+
+Kill container: docker container stop $containerId (from docker ps)
 
 
 ## Further help
